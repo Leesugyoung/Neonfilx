@@ -26,12 +26,13 @@ const Box = styled(motion.div)`
 `;
 
 const box = {
-  invisible: {
-    x: 500,
+  entry: (back: boolean) => ({
+    x: back ? -500 : 500,
+    // custom back > false
     opacity: 0,
     scale: 0,
-  },
-  visible: {
+  }),
+  center: {
     x: 0,
     opacity: 1,
     scale: 1,
@@ -39,29 +40,41 @@ const box = {
       duration: 1,
     },
   },
-  exit: { x: -500, opacity: 0, scale: 0, transition: { duration: 1 } },
+  exit: (back: boolean) => ({
+    x: back ? 500 : -500,
+    // custom back > ture
+    opacity: 0,
+    scale: 0,
+    transition: { duration: 1 },
+  }),
 };
 
 function App() {
   const [visible, setVisible] = useState(1);
-  const nextPlease = () => setVisible(prev => (prev === 10 ? 10 : prev + 1));
-  const prevPlease = () => setVisible(prev => (prev === 1 ? 1 : prev - 1));
+  const [back, setBack] = useState(false);
+  const nextPlease = () => {
+    setBack(false);
+    setVisible(prev => (prev === 10 ? 10 : prev + 1));
+  };
+  const prevPlease = () => {
+    setBack(true);
+    setVisible(prev => (prev === 1 ? 1 : prev - 1));
+  };
   return (
     <Wrapper>
-      <AnimatePresence>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i =>
-          i === visible ? (
-            <Box
-              variants={box}
-              initial="invisible"
-              animate="visible"
-              exit="exit"
-              key={i}
-            >
-              {i}
-            </Box>
-          ) : null
-        )}
+      <AnimatePresence custom={back}>
+        {/* mode="wait" > 1번 box의 exit 애니메이션이 끝난뒤에 
+        2번 box(다음 element) 가 올수있게 해준다*/}
+        <Box
+          custom={back}
+          variants={box}
+          initial="entry"
+          animate="center"
+          exit="exit"
+          key={visible}
+        >
+          {visible}
+        </Box>
       </AnimatePresence>
       <button onClick={nextPlease}>Next</button>
       <button onClick={prevPlease}>Prev</button>

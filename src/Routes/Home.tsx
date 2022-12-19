@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { getMovies, IGetMoviesResult } from "../api";
 import { makeImagePath } from "../utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useWindowDimensions from "../Components/useWindowDimensions.tsx";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -46,39 +47,45 @@ const Overview = styled.p`
 
 const Slider = styled.div`
   position: relative;
-  top: -80px;
+  top: -90px;
 `;
 
 const Row = styled(motion.div)`
   display: grid;
+  gap: 5px;
   grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
   position: absolute;
   width: 100%;
 `;
 
-const RowBox = styled(motion.div)`
+const RowBox = styled(motion.div)<{ bgPhoto: string }>`
   background-color: white;
   height: 130px;
   border-radius: 3px;
-  color: red;
+  background-image: url(${props => props.bgPhoto});
+  background-size: cover;
+  background-position: center center;
 `;
 
-const rowVariants = {
-  hidden: {
-    x: window.outerWidth - 5,
-  },
-  visible: {
-    x: 0,
-  },
-  exit: {
-    x: -window.outerWidth,
-  },
-};
+const offset = 6;
+// 한번에 보여주고싶은 영화의 개수
 
 function Home() {
+  const width = useWindowDimensions();
   const [index, setIndex] = useState(0);
-  const incraseIndex = () => setIndex(prev => prev + 1);
+  const [leaving, setLeaving] = useState(false);
+  const incraseIndex = () => {
+    if (data) {
+      if (leaving) return;
+      toggleLeaving();
+      const totalMovies = data.results.length;
+      // 총 영화 개수에서 타이틀에 걸린 영화 1개 제외한 값
+      const maxIndex = Math.floor(totalMovies / offset) - 1;
+      // 완벽한 정수가 나오지 않을 수 있으므로 반올림처리(올림처리시 ceil)
+      setIndex(prev => (prev === maxIndex ? 0 : prev + 1));
+    }
+  };
+  const toggleLeaving = () => setLeaving(prev => !prev);
   const { data, isLoading } = useQuery<IGetMoviesResult>(
     ["movies", "nowPlaying"],
     getMovies
@@ -98,24 +105,30 @@ function Home() {
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
           <Slider>
-            <AnimatePresence>
-              {/* → Row의 key가 변경되면서 기존 Row가 파괴되며 동작 */}
+            <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+              {/* → exit 이 끝났을때 toggleLeaving을 호출 */}
               <Row
-                variants={rowVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                transition={{ type: "tween", duration: 4 }}
+                initial={{ x: width }}
+                animate={{ x: 0 }}
+                exit={{ x: -width + 10 }} // 간격조절을 위한 + 10
+                transition={{ type: "tween", duration: 1 }}
                 key={index}
               >
-                {[1, 2, 3, 4, 5, 6].map(i => (
-                  <RowBox key={i}>{i}</RowBox>
-                ))}
+                {data?.results
+                  .slice(1)
+                  .slice(offset * index, offset * index + offset)
+                  //index 값에 따라 6 단위의 배열로 잘라냄
+                  .map(movie => (
+                    <RowBox
+                      key={movie.id}
+                      bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
+                    />
+                  ))}
               </Row>
             </AnimatePresence>
           </Slider>
         </>
-      )}{" "}
+      )}
     </Wrapper>
   );
 }

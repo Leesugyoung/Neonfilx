@@ -5,6 +5,7 @@ import { makeImagePath } from "../utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import useWindowDimensions from "../Components/useWindowDimensions.tsx";
+import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -26,7 +27,7 @@ const Banner = styled.div<{ bgPhoto: string }>`
   padding: 60px;
   background-image: linear-gradient(
       to right,
-      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.6),
       rgba(0, 0, 0, 0)
     ),
     url(${props => props.bgPhoto});
@@ -35,7 +36,7 @@ const Banner = styled.div<{ bgPhoto: string }>`
 
 const Title = styled.h2`
   font-size: 70px;
-  font-weight: 800;
+  font-weight: 700;
   margin-bottom: 20px;
 `;
 
@@ -65,12 +66,65 @@ const RowBox = styled(motion.div)<{ bgPhoto: string }>`
   background-image: url(${props => props.bgPhoto});
   background-size: cover;
   background-position: center center;
+  cursor: pointer;
+  // 첫번째랑 마지막 포스터 scale 1.3 될때 잘리지않게
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
+
+const Info = styled(motion.div)`
+  opacity: 0;
+  padding: 10px;
+  background-color: rgb(28, 28, 28);
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  h4 {
+    text-align: center;
+    font-size: 13px;
+  }
+`;
+
+// --- Variants
+
+const RowBoxVariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.3,
+    y: -40,
+    transition: {
+      delay: 0.3,
+      duration: 0.3,
+      type: "tween",
+    },
+  },
+};
+
+const infoVariants = {
+  hover: {
+    opacity: 1,
+    transition: {
+      delay: 0.3,
+      duration: 0.3,
+      type: "tween",
+    },
+  },
+};
+
+// ----
 
 const offset = 6;
 // 한번에 보여주고싶은 영화의 개수
 
 function Home() {
+  const navigate = useNavigate(); // 구) useHistroy
+  const bigMovieMatch: PathMatch<string> | null = useMatch("/movies/:movieId");
   const width = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
@@ -86,6 +140,10 @@ function Home() {
     }
   };
   const toggleLeaving = () => setLeaving(prev => !prev);
+  const onBoxClicked = (movieId: number) => {
+    // 클릭한 영화의 id
+    navigate(`/movies/${movieId}`);
+  };
   const { data, isLoading } = useQuery<IGetMoviesResult>(
     ["movies", "nowPlaying"],
     getMovies
@@ -120,13 +178,40 @@ function Home() {
                   //index 값에 따라 6 단위의 배열로 잘라냄
                   .map(movie => (
                     <RowBox
+                      layoutId={movie.id + ""}
+                      onClick={() => onBoxClicked(movie.id)}
                       key={movie.id}
+                      variants={RowBoxVariants}
+                      initial="normal"
+                      whileHover="hover"
+                      transition={{ type: "tween" }}
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
-                    />
+                    >
+                      <Info variants={infoVariants}>
+                        <h4>{movie.title}</h4>
+                      </Info>
+                    </RowBox>
                   ))}
               </Row>
             </AnimatePresence>
           </Slider>
+          <AnimatePresence>
+            {bigMovieMatch ? (
+              <motion.div
+                layoutId={bigMovieMatch.params.movieId}
+                style={{
+                  position: "absolute",
+                  width: "40vw",
+                  height: "80vh",
+                  backgroundColor: "red",
+                  top: 50,
+                  left: 0,
+                  right: 0,
+                  margin: "0 auto",
+                }}
+              />
+            ) : null}
+          </AnimatePresence>
         </>
       )}
     </Wrapper>

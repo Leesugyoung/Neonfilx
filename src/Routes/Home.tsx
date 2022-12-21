@@ -6,91 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import useWindowDimensions from "../Components/useWindowDimensions.tsx";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
+import * as H from "../styled-components/StyledHome";
 
-const Wrapper = styled.div`
-  background-color: black;
-  overflow-x: hidden;
-`;
-
-const Loader = styled.div`
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Banner = styled.div<{ bgPhoto: string }>`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px;
-  background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.6),
-      rgba(0, 0, 0, 0)
-    ),
-    url(${props => props.bgPhoto});
-  background-size: cover;
-`;
-
-const Title = styled.h2`
-  font-size: 70px;
-  font-weight: 700;
-  margin-bottom: 20px;
-`;
-
-const Overview = styled.p`
-  font-size: 18px;
-  font-weight: 400;
-  width: 50%;
-`;
-
-const Slider = styled.div`
-  position: relative;
-  top: -90px;
-`;
-
-const Row = styled(motion.div)`
-  display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
-  position: absolute;
-  width: 100%;
-`;
-
-const RowBox = styled(motion.div)<{ bgPhoto: string }>`
-  background-color: white;
-  height: 130px;
-  border-radius: 3px;
-  background-image: url(${props => props.bgPhoto});
-  background-size: cover;
-  background-position: center center;
-  cursor: pointer;
-  // 첫번째랑 마지막 포스터 scale 1.3 될때 잘리지않게
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
-`;
-
-const Info = styled(motion.div)`
-  opacity: 0;
-  padding: 10px;
-  background-color: rgb(28, 28, 28);
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  h4 {
-    text-align: center;
-    font-size: 13px;
-  }
-`;
-
-// --- Variants
-
+// ----------Variants----
 const RowBoxVariants = {
   normal: {
     scale: 1,
@@ -117,17 +35,22 @@ const infoVariants = {
   },
 };
 
-// ----
+const overlayVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 0.7 },
+  exit: { opacity: 0 },
+};
+// ------------------
 
 const offset = 6;
 // 한번에 보여주고싶은 영화의 개수
 
 function Home() {
+  const [index, setIndex] = useState(0);
+  const [leaving, setLeaving] = useState(false);
   const navigate = useNavigate(); // 구) useHistroy
   const bigMovieMatch: PathMatch<string> | null = useMatch("/movies/:movieId");
   const width = useWindowDimensions();
-  const [index, setIndex] = useState(0);
-  const [leaving, setLeaving] = useState(false);
   const incraseIndex = () => {
     if (data) {
       if (leaving) return;
@@ -148,24 +71,38 @@ function Home() {
     ["movies", "nowPlaying"],
     getMovies
   );
+  const onOverlayClick = () => navigate(-1); // 뒤로가기 기능
+  const clickedMovie =
+    bigMovieMatch?.params.movieId &&
+    data?.results.find(
+      movie => movie.id + "" === bigMovieMatch?.params.movieId
+    );
   return (
-    <Wrapper>
+    <H.Wrapper>
       {isLoading ? (
-        <Loader>Loaidng...</Loader>
+        <H.Loader>Loaidng...</H.Loader>
       ) : (
         <>
-          <Banner
+          <H.Banner
             onClick={incraseIndex}
             bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
           >
-            {/* 만약 backdrop_path 가 존재하지 않을 경우 ""를 반환 */}
-            <Title>{data?.results[0].title}</Title>
-            <Overview>{data?.results[0].overview}</Overview>
-          </Banner>
-          <Slider>
+            <H.Title>{data?.results[0].title}</H.Title>
+            <H.Overview>{data?.results[0].overview}</H.Overview>
+            <H.BtnContainer>
+              <H.PlayBtn>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                  <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+                </svg>
+                Play
+              </H.PlayBtn>
+              <H.InfoBtn> ⓘ Information</H.InfoBtn>
+            </H.BtnContainer>
+          </H.Banner>
+          <H.Slider>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
               {/* → exit 이 끝났을때 toggleLeaving을 호출 */}
-              <Row
+              <H.Row
                 initial={{ x: width }}
                 animate={{ x: 0 }}
                 exit={{ x: -width + 10 }} // 간격조절을 위한 + 10
@@ -177,7 +114,7 @@ function Home() {
                   .slice(offset * index, offset * index + offset)
                   //index 값에 따라 6 단위의 배열로 잘라냄
                   .map(movie => (
-                    <RowBox
+                    <H.RowBox
                       layoutId={movie.id + ""}
                       onClick={() => onBoxClicked(movie.id)}
                       key={movie.id}
@@ -187,34 +124,46 @@ function Home() {
                       transition={{ type: "tween" }}
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
                     >
-                      <Info variants={infoVariants}>
+                      <H.Info variants={infoVariants}>
                         <h4>{movie.title}</h4>
-                      </Info>
-                    </RowBox>
+                      </H.Info>
+                    </H.RowBox>
                   ))}
-              </Row>
+              </H.Row>
             </AnimatePresence>
-          </Slider>
+          </H.Slider>
           <AnimatePresence>
             {bigMovieMatch ? (
-              <motion.div
-                layoutId={bigMovieMatch.params.movieId}
-                style={{
-                  position: "absolute",
-                  width: "40vw",
-                  height: "80vh",
-                  backgroundColor: "red",
-                  top: 50,
-                  left: 0,
-                  right: 0,
-                  margin: "0 auto",
-                }}
-              />
+              <>
+                <H.Overlay
+                  variants={overlayVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  onClick={onOverlayClick}
+                />
+                <H.BigMovie layoutId={bigMovieMatch.params.movieId}>
+                  {clickedMovie && (
+                    <>
+                      <H.BigCover
+                        style={{
+                          backgroundImage: `linear-gradient(to top, #181818, transparent), url(${makeImagePath(
+                            clickedMovie.backdrop_path,
+                            "w500"
+                          )})`,
+                        }}
+                      />
+                      <H.BigTitle>{clickedMovie.title}</H.BigTitle>
+                      <H.BigOverview>{clickedMovie.overview}</H.BigOverview>
+                    </>
+                  )}
+                </H.BigMovie>
+              </>
             ) : null}
           </AnimatePresence>
         </>
       )}
-    </Wrapper>
+    </H.Wrapper>
   );
 }
 

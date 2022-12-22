@@ -13,7 +13,8 @@ import * as Hed from "../styled-components/StyledHeader";
 //---------Variants
 const navVariants = {
   top: {
-    backgroundColor: "rgba(0,0,0,0)",
+    backgroundColor:
+      "linear-gradient(to bottom, rgba(18,18,18,1), rgba(18,18,18,0))",
   },
   scroll: {
     backgroundColor: "rgba(0,0,0,1)",
@@ -47,7 +48,7 @@ function Header() {
   const { scrollY } = useScroll();
   useEffect(() => {
     scrollY.onChange(() => {
-      if (scrollY.get() > 80) {
+      if (scrollY.get() > 0) {
         navAnimation.start("scroll");
       } else {
         navAnimation.start("top");
@@ -55,7 +56,6 @@ function Header() {
     });
   }, [scrollY, navAnimation]);
   const navigate: NavigateFunction = useNavigate();
-
   const { register, handleSubmit } = useForm<IForm>();
   const onValid = ({ keyword }: IForm) => {
     navigate(`/search?keyword=${keyword}`);
@@ -105,7 +105,7 @@ function Header() {
         <Hed.Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={toggleSearch}
-            animate={{ x: searchOpen ? -180 : 0 }}
+            animate={{ x: searchOpen ? -200 : 0 }}
             transition={{ type: "linear" }}
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -122,7 +122,7 @@ function Header() {
             animate={inputAnimation}
             initial={{ scaleX: 0 }}
             transition={{ type: "linear" }}
-            placeholder="제목, 사람, 장르"
+            placeholder="Title, Person, Genre"
           />
         </Hed.Search>
       </Hed.Column>

@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Loader = styled.div`
-  height: 20vh;
+  height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,10 +16,7 @@ export const Loader = styled.div`
 // ---------- 배너영역
 export const Banner = styled.div<{ bgPhoto: string }>`
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px;
+  padding-left: 60px;
   background-image: linear-gradient(
       to right,
       rgba(0, 0, 0, 0.6),
@@ -27,6 +24,16 @@ export const Banner = styled.div<{ bgPhoto: string }>`
     ),
     url(${props => props.bgPhoto});
   background-size: cover;
+`;
+
+export const Title_and_Overview = styled.div`
+  width: 70%;
+  height: 60%;
+  display: flex;
+  position: relative;
+  top: 150px;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const Title = styled.h2`
@@ -40,17 +47,18 @@ export const Overview = styled.p`
   font-weight: 400;
   width: 45%;
   text-shadow: 1px 1px 4px black;
+  margin-bottom: 10px;
 `;
 
 export const PlayBtn = styled.p`
   width: 130px;
-  height: 40px;
+  height: 45px;
   background-color: ${props => props.theme.white.lighter};
   font-size: 20px;
   color: ${props => props.theme.black.darker};
   border-radius: 5px;
   margin-right: 10px;
-  line-height: 40px;
+  line-height: 45px;
   text-align: center;
   cursor: pointer;
   svg {
@@ -61,11 +69,11 @@ export const PlayBtn = styled.p`
 
 export const InfoBtn = styled.p`
   width: 170px;
-  height: 40px;
+  height: 45px;
   background-color: rgba(75, 75, 75, 0.8);
   font-size: 20px;
   color: ${props => props.theme.white.lighter};
-  line-height: 40px;
+  line-height: 45px;
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
@@ -77,11 +85,17 @@ export const Slider = styled.div`
   top: -80px;
 `;
 
+export const S_Title_and_Row = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 3%;
+`;
+
 export const SliderTitle = styled.div`
-  font-size: 20px;
+  font-size: 22px;
   color: ${props => props.theme.white.darker};
   font-weight: 500;
-  margin-left: 60px;
   margin-bottom: 20px;
 `;
 
@@ -89,12 +103,11 @@ export const Row = styled(motion.div)`
   display: grid;
   gap: 5px;
   grid-template-columns: repeat(6, 1fr);
-  position: absolute;
-  width: 100%;
+  width: 96.4%;
 `;
 
 export const RowBox = styled(motion.div)<{ bgPhoto: string }>`
-  background-color: white;
+  background-color: black;
   height: 130px;
   border-radius: 3px;
   background-image: url(${props => props.bgPhoto});
@@ -103,17 +116,17 @@ export const RowBox = styled(motion.div)<{ bgPhoto: string }>`
   cursor: pointer;
   // 첫번째랑 마지막 포스터 scale 1.3 될때 잘리지않게
   &:first-child {
-    transform-origin: center left;
+    transform-origin: center left !important;
   }
   &:last-child {
-    transform-origin: center right;
+    transform-origin: center right !important;
   }
 `;
 
 export const Info = styled(motion.div)`
   opacity: 0;
   padding: 10px;
-  background-color: rgb(28, 28, 28);
+  background-color: rgba(28, 28, 28, 0.6);
   position: absolute;
   width: 100%;
   bottom: 0;

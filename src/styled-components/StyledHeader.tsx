@@ -10,7 +10,6 @@ export const Nav = styled(motion.nav)`
   top: 0;
   font-size: 14px;
   padding: 20px 60px;
-  color: white;
 `;
 
 export const Column = styled.div`
@@ -70,14 +69,15 @@ export const Search = styled.form`
 `;
 
 export const Input = styled(motion.input)`
+  width: 250px;
   transform-origin: right center;
   position: absolute;
   right: 0px;
-  padding: 5px 10px;
+  padding: 10px;
   padding-left: 40px;
   z-index: -1;
   color: white;
   font-size: 14px;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid ${props => props.theme.white.lighter};
 `;

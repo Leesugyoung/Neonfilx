@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import styled from "styled-components";
 import { getMovies, IGetMoviesResult } from "../api";
 import { makeImagePath } from "../utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import useWindowDimensions from "../Components/useWindowDimensions.tsx";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
@@ -87,50 +86,55 @@ function Home() {
             onClick={incraseIndex}
             bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
           >
-            <H.Title>{data?.results[0].title}</H.Title>
-            <H.Overview>{data?.results[0].overview}</H.Overview>
-            <H.BtnContainer>
-              <H.PlayBtn>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                  <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
-                </svg>
-                Play
-              </H.PlayBtn>
-              <H.InfoBtn> ⓘ Information</H.InfoBtn>
-            </H.BtnContainer>
+            <H.Title_and_Overview>
+              <H.Title>{data?.results[0].title}</H.Title>
+              <H.Overview>{data?.results[0].overview}</H.Overview>
+              <H.BtnContainer>
+                <H.PlayBtn>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+                  </svg>
+                  Play
+                </H.PlayBtn>
+                <H.InfoBtn> ⓘ Information</H.InfoBtn>
+              </H.BtnContainer>
+            </H.Title_and_Overview>
           </H.Banner>
           <H.Slider>
-            <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-              {/* → exit 이 끝났을때 toggleLeaving을 호출 */}
-              <H.Row
-                initial={{ x: width }}
-                animate={{ x: 0 }}
-                exit={{ x: -width + 10 }} // 간격조절을 위한 + 10
-                transition={{ type: "tween", duration: 1 }}
-                key={index}
-              >
-                {data?.results
-                  .slice(1)
-                  .slice(offset * index, offset * index + offset)
-                  //index 값에 따라 6 단위의 배열로 잘라냄
-                  .map(movie => (
-                    <H.RowBox
-                      layoutId={movie.id + ""}
-                      onClick={() => onBoxClicked(movie.id)}
-                      key={movie.id}
-                      variants={RowBoxVariants}
-                      initial="normal"
-                      whileHover="hover"
-                      transition={{ type: "tween" }}
-                      bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
-                    >
-                      <H.Info variants={infoVariants}>
-                        <h4>{movie.title}</h4>
-                      </H.Info>
-                    </H.RowBox>
-                  ))}
-              </H.Row>
-            </AnimatePresence>
+            <H.S_Title_and_Row>
+              <H.SliderTitle>Now Playing</H.SliderTitle>
+              <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+                {/* → exit 이 끝났을때 toggleLeaving을 호출 */}
+                <H.Row
+                  initial={{ x: width }}
+                  animate={{ x: 0 }}
+                  exit={{ x: -width + 10 }} // 간격조절을 위한 + 10
+                  transition={{ type: "tween", duration: 1 }}
+                  key={index}
+                >
+                  {data?.results
+                    .slice(1)
+                    .slice(offset * index, offset * index + offset)
+                    //index 값에 따라 6 단위의 배열로 잘라냄
+                    .map(movie => (
+                      <H.RowBox
+                        layoutId={movie.id + ""}
+                        onClick={() => onBoxClicked(movie.id)}
+                        key={movie.id}
+                        variants={RowBoxVariants}
+                        initial="normal"
+                        whileHover="hover"
+                        transition={{ type: "tween" }}
+                        bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
+                      >
+                        <H.Info variants={infoVariants}>
+                          <h4>{movie.title}</h4>
+                        </H.Info>
+                      </H.RowBox>
+                    ))}
+                </H.Row>
+              </AnimatePresence>
+            </H.S_Title_and_Row>
           </H.Slider>
           <AnimatePresence>
             {bigMovieMatch ? (

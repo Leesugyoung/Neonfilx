@@ -13,8 +13,7 @@ import * as Hed from "../styled-components/StyledHeader";
 //---------Variants
 const navVariants = {
   top: {
-    backgroundColor:
-      "linear-gradient(to bottom, rgba(18,18,18,1), rgba(18,18,18,0))",
+    backgroundColor: "rgba(0,0,0,0)",
   },
   scroll: {
     backgroundColor: "rgba(0,0,0,1)",
@@ -48,7 +47,7 @@ function Header() {
   const { scrollY } = useScroll();
   useEffect(() => {
     scrollY.onChange(() => {
-      if (scrollY.get() > 0) {
+      if (scrollY.get() > 50) {
         navAnimation.start("scroll");
       } else {
         navAnimation.start("top");

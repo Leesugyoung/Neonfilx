@@ -10,7 +10,7 @@ export const Nav = styled(motion.nav)`
   top: 0;
   font-size: 14px;
   padding: 20px 60px;
-  z-index: 999;
+  z-index: 998;
   height: 10%;
 `;
 

@@ -61,7 +61,7 @@ const GlobalStyle = createGlobalStyle`
   body{
     font-family: "Segoe UI", Roboto, Ubuntu, sans-serif;
     color: ${props => props.theme.white.darker};
-    background-color: black;
+    background-color: ${props => props.theme.black.veryDark};
     line-height: 1.2;
     overflow-x: hidden;
     font-size: 10px;

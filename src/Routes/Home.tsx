@@ -31,9 +31,6 @@ function Home() {
     () => getMovies("upcoming")
   );
 
-  // 불필요한 api 호출 막음
-  useEffect(() => {}, []);
-
   return (
     <H.Wrapper>
       {now_Loading && pop_Loading && top_Loading && up_Loading ? (
@@ -46,13 +43,21 @@ function Home() {
           {/* -- 배너 영역 --  */}
           <Banner data={now_data} />
           {/* -- 슬라이드 영역 -- */}
-          <MovieSlider category="now" title="Now Playing" data={now_data} />
+          <MovieSlider
+            category="now_playing"
+            title="Now Playing"
+            data={now_data}
+          />
           <MovieSlider
             category="popular"
             title="Trending Now"
             data={pop_data}
           />
-          <MovieSlider category="toprated" title="High Rated" data={top_data} />
+          <MovieSlider
+            category="top_rated"
+            title="High Rated"
+            data={top_data}
+          />
           <MovieSlider category="upcoming" title="Coming soon" data={up_data} />
         </>
       )}

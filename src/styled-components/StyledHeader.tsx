@@ -10,7 +10,7 @@ export const Nav = styled(motion.nav)`
   top: 0;
   font-size: 14px;
   padding: 20px 60px;
-  z-index: 998;
+  z-index: 998; // z-index: 999 : modal
   height: 10%;
 `;
 
@@ -80,6 +80,6 @@ export const Input = styled(motion.input)`
   z-index: -1;
   color: white;
   font-size: 14px;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(20, 20, 20, 0.9);
   border: 1px solid ${props => props.theme.white.lighter};
 `;

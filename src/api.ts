@@ -38,6 +38,7 @@ export interface IGetMovieDetail {
     }
   ];
   tagline: string;
+  release_date: string;
 }
 
 export interface IGetMovieCredit {

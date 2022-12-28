@@ -111,6 +111,11 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
     }
   };
 
+  //index 값에 따라 6 단위의 배열로 잘라냄
+  const resultsData = data?.results
+    .slice(1)
+    .slice(offset * index, offset * index + offset);
+
   return (
     <>
       {/* -- 슬라이드 영역 -- */}
@@ -130,12 +135,10 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
             custom={isNext}
             transition={{ type: "tween", duration: 1 }}
           >
-            {data?.results
-              .slice(1)
-              .slice(offset * index, offset * index + offset)
-              //index 값에 따라 6 단위의 배열로 잘라냄
-              .map(movie => (
+            {resultsData &&
+              resultsData.map(movie => (
                 <H.RowBox
+                  layoutId={bigMovieMatch?.params.movieId}
                   onClick={() => onBoxClicked(movie.id)}
                   key={movie.id}
                   variants={BoxHoverVariants}
@@ -146,6 +149,8 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
                     movie.backdrop_path
                       ? movie.backdrop_path
                       : movie.poster_path
+                      ? movie.poster_path
+                      : "no image."
                   )}
                 >
                   <H.RowBox_Info variants={infoVariants}>
@@ -170,7 +175,12 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
       {/* -- 오버레이 영역 -- */}
       <AnimatePresence>
         {bigMovieMatch ? (
-          <MovieDetail id={bigMovieMatch.params.id!} category={category} />
+          <>
+            <MovieDetail
+              id={bigMovieMatch.params.movieId!}
+              category={category}
+            />
+          </>
         ) : null}
       </AnimatePresence>
     </>

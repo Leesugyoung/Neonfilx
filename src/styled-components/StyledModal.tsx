@@ -27,19 +27,43 @@ export const Modal = styled(motion.div)`
 
 export const Modal_Poster = styled.div`
   width: 100%;
+  height: 400px;
   background-position: center center;
   background-size: cover;
-  height: 400px;
+  image-rendering: -webkit-optimize-contrast;
 `;
 
-export const Poster_Title = styled.h3`
+export const Poster_prevBtn = styled.div`
+  color: ${props => props.theme.white.darker};
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 19px;
+  text-align: center;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  line-height: 40px;
+  background-color: ${props => props.theme.black.darker};
+`;
+
+export const Poster_Title = styled.div`
+  width: 95%;
+  height: 70px;
   color: ${props => props.theme.white.lighter};
-  padding-bottom: 30px;
   padding-left: 50px;
   font-size: 50px;
   font-weight: 700;
   position: relative;
-  top: -80px;
+  top: -90px;
+  text-shadow: 1px 1px 2px #a8a8a8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
 `;
 
 export const Poster_infomation_top = styled.div`
@@ -50,15 +74,26 @@ export const Poster_infomation_top = styled.div`
   position: relative;
   font-weight: 500;
   font-weight: 18px;
-  span {
-    margin-right: 10px;
-  }
   span:first-child {
     color: #46d369;
     border: 1px solid ${props => props.theme.white.darker};
-    padding: 1px 5px;
+    padding: 0.5px 4px;
     border-radius: 3px;
+    margin-right: 10px;
   }
+  p {
+    display: inline;
+  }
+  span:last-child {
+    margin-left: 10px;
+  }
+`;
+
+export const p_dot = styled.span`
+  width: 5px;
+  height: 5px;
+  border-radius: 3px;
+  color: white;
 `;
 
 export const Poster_infomation_bottom = styled.div`
@@ -77,6 +112,12 @@ export const Poster_overview = styled.div`
   color: ${props => props.theme.white.lighter};
   background-color: ${props => props.theme.black.darker};
   padding-right: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 7; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
 `;
 
 export const Poster_acter_and_director = styled.div`

@@ -1,15 +1,22 @@
+import { Navigate, useNavigate } from "react-router-dom";
 import { IGetMoviesResult } from "../api";
 import * as H from "../styled-components/StyledHome";
 import { makeImagePath } from "../utils/utils";
+import MovieSlider from "./movies/MovieSlider";
 
 interface IBannerProps {
   data: IGetMoviesResult | undefined;
 }
 
 const Banner: React.FC<IBannerProps> = ({ data }) => {
+  const nowId = data?.results[0].id;
+  const navigate = useNavigate();
+  const onInfoClick = (nowId: number) => {
+    navigate(`/movies/${nowId}`);
+  };
   return (
     <>
-      <H.Banner bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}>
+      <H.Banner bgphoto={makeImagePath(data?.results[0].backdrop_path || "")}>
         <H.Title_and_Overview>
           <H.Title>{data?.results[0].title}</H.Title>
           <H.Overview>{data?.results[0].overview}</H.Overview>
@@ -29,7 +36,9 @@ const Banner: React.FC<IBannerProps> = ({ data }) => {
               </svg>
               Play
             </H.PlayBtn>
-            <H.InfoBtn> ⓘ Information</H.InfoBtn>
+            <H.InfoBtn onClick={() => onInfoClick(nowId!)}>
+              ⓘ Information
+            </H.InfoBtn>
           </H.Btn_Container>
         </H.Title_and_Overview>
       </H.Banner>

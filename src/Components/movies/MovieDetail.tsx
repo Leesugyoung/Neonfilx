@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { AnimatePresence } from "framer-motion";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
@@ -60,8 +60,10 @@ function MovieDetail({ category, id }: IDetailProps) {
   const openday = detailData?.release_date;
   const sub_Openday = openday?.substring(0, 4);
 
+  // 장르 정보
+
   return (
-    <AnimatePresence>
+    <>
       {detailLoading && creditLoading ? (
         <H.Loader>Loading...</H.Loader>
       ) : (
@@ -99,14 +101,20 @@ function MovieDetail({ category, id }: IDetailProps) {
                 )})`,
               }}
             />
+            <M.Poster_prevBtn onClick={onOverlayClick}>✕</M.Poster_prevBtn>
             <M.Poster_Title>{detailData?.title}</M.Poster_Title>
             <M.Poster_infomation_top>
               <span>{sub_Openday}</span>
-              <span>{detailData?.genres[0].name}</span>
+              {detailData?.genres.slice(0, 3).map((genre, index) => (
+                <p id="genrs" key={genre.id}>
+                  {genre.name}
+                  {index !== detailData.genres.length - 1 && " · "}
+                </p>
+              ))}
               <span>
                 ⭐
                 {detailData?.vote_average
-                  ? Math.floor(detailData?.vote_average)
+                  ? (detailData?.vote_average).toFixed(1)
                   : "not vote"}
               </span>
             </M.Poster_infomation_top>
@@ -128,8 +136,8 @@ function MovieDetail({ category, id }: IDetailProps) {
           </M.Modal>
         </>
       )}
-    </AnimatePresence>
+    </>
   );
 }
 
-export default MovieDetail;
+export default React.memo(MovieDetail);

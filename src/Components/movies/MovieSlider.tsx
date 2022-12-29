@@ -136,16 +136,15 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
             transition={{ type: "tween", duration: 1 }}
           >
             {resultsData &&
-              resultsData.map(movie => (
+              resultsData.map((movie, index) => (
                 <H.RowBox
-                  layoutId={bigMovieMatch?.params.movieId}
                   onClick={() => onBoxClicked(movie.id)}
-                  key={movie.id}
+                  key={index + movie.id}
                   variants={BoxHoverVariants}
                   initial="initial"
                   whileHover="hover"
                   transition={{ type: "tween" }}
-                  bgPhoto={makeImagePath(
+                  bgphoto={makeImagePath(
                     movie.backdrop_path
                       ? movie.backdrop_path
                       : movie.poster_path
@@ -173,16 +172,11 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
       </H.Slider>
 
       {/* -- 오버레이 영역 -- */}
-      <AnimatePresence>
-        {bigMovieMatch ? (
-          <>
-            <MovieDetail
-              id={bigMovieMatch.params.movieId!}
-              category={category}
-            />
-          </>
-        ) : null}
-      </AnimatePresence>
+      {bigMovieMatch ? (
+        <>
+          <MovieDetail id={bigMovieMatch.params.movieId!} category={category} />
+        </>
+      ) : null}
     </>
   );
 };

@@ -14,7 +14,7 @@ export const Loader = styled.div`
 
 // ---배너 영역---
 
-export const Banner = styled.div<{ bgPhoto: string }>`
+export const Banner = styled.div<{ bgphoto: string }>`
   // 배너 이미지
   height: 100vh;
   background-color: black;
@@ -28,7 +28,7 @@ export const Banner = styled.div<{ bgPhoto: string }>`
     ),
     linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)),
     linear-gradient(to top, rgba(20, 20, 20, 1) 4%, rgba(0, 0, 0, 0) 13%),
-    url(${props => props.bgPhoto});
+    url(${props => props.bgphoto});
   background-size: cover;
 `;
 
@@ -132,11 +132,11 @@ export const Row = styled(motion.div)`
   height: 130px;
 `;
 
-export const RowBox = styled(motion.div)<{ bgPhoto: string }>`
+export const RowBox = styled(motion.div)<{ bgphoto: string }>`
   height: 135px;
   margin-right: 5px;
   border-radius: 3px;
-  background-image: url(${props => props.bgPhoto});
+  background-image: url(${props => props.bgphoto});
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

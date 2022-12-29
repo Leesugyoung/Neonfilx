@@ -34,7 +34,7 @@ export const Items = styled.ul`
 export const Item = styled.li`
   font-weight: 500;
   margin-right: 20px;
-  font-size: 14;
+  font-size: 15;
   color: ${props => props.theme.white.darker};
   transition: color 0.3s ease-in-out;
   position: relative;

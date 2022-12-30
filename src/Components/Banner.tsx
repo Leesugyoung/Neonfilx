@@ -1,11 +1,11 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import { IGetMoviesResult } from "../api";
+import { IGetResult } from "../api";
 import * as H from "../styled-components/StyledHome";
 import { makeImagePath } from "../utils/utils";
 import MovieSlider from "./movies/MovieSlider";
 
 interface IBannerProps {
-  data: IGetMoviesResult | undefined;
+  data: IGetResult | undefined;
 }
 
 const Banner: React.FC<IBannerProps> = ({ data }) => {

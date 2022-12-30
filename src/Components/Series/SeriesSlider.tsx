@@ -5,7 +5,6 @@ import { AnimatePresence, Variants } from "framer-motion";
 import { makeImagePath } from "../../utils/utils";
 import { PathMatch, useMatch } from "react-router-dom";
 import { IGetResult } from "../../api";
-import MovieDetail from "./MovieDetail";
 
 // ----------Variants----
 const RowVariants: Variants = {
@@ -53,8 +52,8 @@ interface IBannerProps {
   category: string;
 }
 
-const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
-  // - 슬라이더 내에 한번에 보여주고싶은 영화의 개수
+const SeriesSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
+  // - 슬라이더 내에 한번에 보여주고싶은 시리즈의 개수
   const offset = 6;
 
   // - 슬라이드 다음, 이전으로 넘기기위한 인덱스
@@ -69,12 +68,12 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
 
   // - Box 클릭시 url 이동
   const navigate = useNavigate();
-  const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
+  const onBoxClicked = (id: number) => {
+    navigate(`/tv/${id}`);
   };
 
-  // "/movies/:movieId" URL 로 이동하였는지 확인
-  const bigMovieMatch: PathMatch<string> | null = useMatch("/movies/:movieId");
+  // "/tv/:id" URL 로 이동하였는지 확인
+  // const tvMatch: PathMatch<string> | null = useMatch("/tv/:id");
 
   // - nextIndex : index state 증가 함수
   const nextIndex = () => {
@@ -82,9 +81,9 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
       // 애니메이션이 아직 끝나지 않았다면
       if (leaving) return;
 
-      const totalMovies = data.results.length;
-      // 총 영화 개수에서 타이틀에 걸린 영화 1개 제외한 값
-      const maxIndex = Math.floor(totalMovies / offset) - 1;
+      const totalSeries = data.results.length;
+      // 총 시리즈 개수에서 타이틀에 걸린 시리즈 1개 제외한 값
+      const maxIndex = Math.floor(totalSeries / offset) - 1;
 
       toggleLeaving();
 
@@ -99,9 +98,9 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
     if (data) {
       // 애니메이션이 아직 끝나지 않았다면
       if (leaving) return;
-      const totalMovies = data.results.length;
-      // 총 영화 개수에서 타이틀에 걸린 영화 1개 제외한 값
-      const maxIndex = Math.floor(totalMovies / offset) - 1;
+      const totalSeries = data.results.length;
+      // 총 시리즈 개수에서 타이틀에 걸린 시리즈 1개 제외한 값
+      const maxIndex = Math.floor(totalSeries / offset) - 1;
 
       toggleLeaving();
 
@@ -136,24 +135,24 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
             transition={{ type: "tween", duration: 1 }}
           >
             {resultsData &&
-              resultsData.map((movie, index) => (
+              resultsData.map((Series, id) => (
                 <H.RowBox
-                  onClick={() => onBoxClicked(movie.id)}
-                  key={index + movie.id}
+                  // onClick={() => onBoxClicked(movie.id)}
+                  key={index + id}
                   variants={BoxHoverVariants}
                   initial="initial"
                   whileHover="hover"
                   transition={{ type: "tween" }}
                   bgphoto={makeImagePath(
-                    movie.backdrop_path
-                      ? movie.backdrop_path
-                      : movie.poster_path
-                      ? movie.poster_path
+                    Series.backdrop_path
+                      ? Series.backdrop_path
+                      : Series.poster_path
+                      ? Series.poster_path
                       : "no image."
                   )}
                 >
                   <H.RowBox_Info variants={infoVariants}>
-                    <h4>{movie.title}</h4>
+                    <h4>{Series.name}</h4>
                   </H.RowBox_Info>
                 </H.RowBox>
               ))}
@@ -172,13 +171,13 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
       </H.Slider>
 
       {/* -- 오버레이 영역 -- */}
-      {bigMovieMatch ? (
+      {/*       {bigMovieMatch ? (
         <>
           <MovieDetail id={bigMovieMatch.params.movieId!} category={category} />
         </>
-      ) : null}
+      ) : null} */}
     </>
   );
 };
 
-export default MovieSlider;
+export default SeriesSlider;

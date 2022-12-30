@@ -6,7 +6,6 @@ import { createGlobalStyle } from "styled-components";
 import App from "./App";
 import { theme } from "./theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Helmet } from "react-helmet";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,

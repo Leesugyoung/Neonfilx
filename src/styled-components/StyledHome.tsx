@@ -195,3 +195,12 @@ export const nextBtn = styled.div`
   z-index: 1;
   cursor: pointer;
 `;
+
+// ---------- 푸터 영역
+export const Footer = styled.div`
+  position: relative;
+  bottom: 60px;
+  font-size: 13px;
+  text-align: center;
+  color: #7c7c7c;
+`;

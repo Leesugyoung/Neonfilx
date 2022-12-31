@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AnimatePresence, Variants } from "framer-motion";
 import { makeImagePath } from "../../utils/utils";
 import { PathMatch, useMatch } from "react-router-dom";
-import { IGetResult } from "../../api";
+import { IGetResult } from "../apis/Mov_Ser_Api";
 import MovieDetail from "./MovieDetail";
 
 // ----------Variants----
@@ -81,33 +81,25 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
     if (data) {
       // 애니메이션이 아직 끝나지 않았다면
       if (leaving) return;
-
-      const totalMovies = data.results.length;
       // 총 영화 개수에서 타이틀에 걸린 영화 1개 제외한 값
+      const totalMovies = data.results.length;
       const maxIndex = Math.floor(totalMovies / offset) - 1;
-
+      setIsNext(true);
       toggleLeaving();
-
-      // 완벽한 정수가 나오지 않을 수 있으므로 반올림처리
-      setIndex(prev => (prev === maxIndex ? 0 : prev + 1));
-      setIsNext(() => true);
+      setIndex(prev => (prev >= maxIndex ? 0 : prev + 1));
     }
   };
 
   // - prevIndex : index state 감소 함수
   const prevIndex = () => {
     if (data) {
-      // 애니메이션이 아직 끝나지 않았다면
       if (leaving) return;
       const totalMovies = data.results.length;
-      // 총 영화 개수에서 타이틀에 걸린 영화 1개 제외한 값
       const maxIndex = Math.floor(totalMovies / offset) - 1;
 
       toggleLeaving();
-
-      // 완벽한 정수가 나오지 않을 수 있으므로 반올림처리
-      setIndex(prev => (prev === 0 ? maxIndex - 1 : prev - 1));
-      setIsNext(() => false);
+      setIndex(prev => (prev === 0 ? maxIndex : prev - 1));
+      setIsNext(false);
     }
   };
 

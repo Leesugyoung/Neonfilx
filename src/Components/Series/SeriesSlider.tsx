@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { AnimatePresence, Variants } from "framer-motion";
 import { makeImagePath } from "../../utils/utils";
 import { PathMatch, useMatch } from "react-router-dom";
-import { IGetResult } from "../../api";
+import { IGetResult } from "../apis/Mov_Ser_Api";
+import SeriesDetail from "./SeriesDetail";
 
 // ----------Variants----
 const RowVariants: Variants = {
@@ -59,7 +60,7 @@ const SeriesSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
   // - 슬라이드 다음, 이전으로 넘기기위한 인덱스
   const [index, setIndex] = useState(0);
 
-  // 슬라이드 애니메이션 방향 설정
+  // - 슬라이드 애니메이션 방향 설정
   const [isNext, setIsNext] = useState(true);
 
   // - leaving : 슬라이드 내에 이동중인 애니메이션이 끝났는지 확인
@@ -68,12 +69,12 @@ const SeriesSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
 
   // - Box 클릭시 url 이동
   const navigate = useNavigate();
-  const onBoxClicked = (id: number) => {
-    navigate(`/tv/${id}`);
+  const onBoxClicked = (tv_id: number) => {
+    navigate(`/tv/${tv_id}`);
   };
 
-  // "/tv/:id" URL 로 이동하였는지 확인
-  // const tvMatch: PathMatch<string> | null = useMatch("/tv/:id");
+  // "/tv/:tv_Id" URL 로 이동하였는지 확인
+  const tvMatch: PathMatch<string> | null = useMatch("/tv/:tv_id");
 
   // - nextIndex : index state 증가 함수
   const nextIndex = () => {
@@ -137,7 +138,7 @@ const SeriesSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
             {resultsData &&
               resultsData.map((Series, id) => (
                 <H.RowBox
-                  // onClick={() => onBoxClicked(movie.id)}
+                  onClick={() => onBoxClicked(Series.id)}
                   key={index + id}
                   variants={BoxHoverVariants}
                   initial="initial"
@@ -171,11 +172,11 @@ const SeriesSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
       </H.Slider>
 
       {/* -- 오버레이 영역 -- */}
-      {/*       {bigMovieMatch ? (
+      {tvMatch ? (
         <>
-          <MovieDetail id={bigMovieMatch.params.movieId!} category={category} />
+          <SeriesDetail tv_id={tvMatch.params.tv_id!} category={category} />
         </>
-      ) : null} */}
+      ) : null}
     </>
   );
 };

@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMovies, IGetResult } from "../api";
+import { getMovies, IGetResult } from "../Components/apis/Mov_Ser_Api";
 import * as H from "../styled-components/StyledHome";
 import MovieSlider from "../Components/movies/MovieSlider";
-import Banner from "../Components/Banner";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { makeImagePath } from "../utils/utils";
@@ -32,7 +31,7 @@ function Home() {
     () => getMovies("upcoming")
   );
 
-  // 배너 영역
+  // 배너 영역 > 모달 띄우는 버튼
   const nowId = now_data?.results[0].id;
   const navigate = useNavigate();
   const onInfoClick = (nowId: number) => {
@@ -83,18 +82,19 @@ function Home() {
             data={now_data}
           />
           <MovieSlider
-            category="popular"
-            title="Trending Now"
-            data={pop_data}
-          />
-          <MovieSlider
             category="top_rated"
             title="High Rated"
             data={top_data}
           />
+          <MovieSlider
+            category="popular"
+            title="Trending Now"
+            data={pop_data}
+          />
           <MovieSlider category="upcoming" title="Coming soon" data={up_data} />
         </>
       )}
+      <H.Footer>© Copyright 2022. Leesu All rights reserved.</H.Footer>
     </H.Wrapper>
   );
 }

@@ -6,7 +6,7 @@ import { IGetCredit, IGetDetail } from "../apis/Mov_Ser_Api";
 import * as H from "../../styled-components/StyledHome";
 import * as M from "../../styled-components/StyledModal";
 import { makeImagePath } from "../../utils/utils";
-import { getMovieCredit, getMovieDetail } from "../apis/Mov_Ser_Api";
+import { getSeriesCredit, getSeriesDetail } from "../apis/Mov_Ser_Api";
 
 // ----------Variants----
 const overlayVariants = {
@@ -24,20 +24,21 @@ const modalVariants = {
 
 interface IDetailProps {
   category: string;
-  id: string;
+  tv_id: string;
 }
 
-function MovieDetail({ category, id }: IDetailProps) {
-  // movie detail API
+function SeriesDetail({ category, tv_id }: IDetailProps) {
+  // Detail API
   const { data: detailData, isLoading: detailLoading } = useQuery<IGetDetail>(
-    ["movie", `${category}_detail`],
-    () => getMovieDetail(id)
+    ["tv", `${category}_detail`],
+    () => getSeriesDetail(tv_id)
   );
 
-  // movie  API
+  console.log(detailData);
+  // Credit API
   const { data: creditData, isLoading: creditLoading } = useQuery<IGetCredit>(
-    ["movie", `${category}_credit`],
-    () => getMovieCredit(id)
+    ["tv", `${category}_credit`],
+    () => getSeriesCredit(tv_id)
   );
 
   // 오버레이 클릭 시 뒤로가기 기능
@@ -48,12 +49,14 @@ function MovieDetail({ category, id }: IDetailProps) {
   const actor = creditData?.cast.slice(0, 5);
 
   // 감독 정보
-  const director = creditData?.crew.find(
-    people => people.known_for_department === "Directing"
+  const production = creditData?.crew.find(
+    people =>
+      people.known_for_department === "Production" ||
+      people.known_for_department === "Directing"
   );
 
-  // 영화 개봉 날짜
-  const openday_data = detailData?.release_date;
+  // 시리즈 개봉 날짜
+  const openday_data = detailData?.first_air_date;
   const sub_Openday = openday_data?.substring(0, 4);
 
   return (
@@ -78,9 +81,7 @@ function MovieDetail({ category, id }: IDetailProps) {
             {detailData ? (
               <Helmet>
                 <title>
-                  {detailData.title
-                    ? detailData.title
-                    : detailData.original_title}
+                  {detailData.name ? detailData.name : detailData.original_name}
                 </title>
               </Helmet>
             ) : (
@@ -95,7 +96,7 @@ function MovieDetail({ category, id }: IDetailProps) {
               }}
             />
             <M.Poster_prevBtn onClick={onOverlayClick}>✕</M.Poster_prevBtn>
-            <M.Poster_Title>{detailData?.title}</M.Poster_Title>
+            <M.Poster_Title>{detailData?.name}</M.Poster_Title>
             <M.Poster_infomation_top>
               <span>{sub_Openday}</span>
               {detailData?.genres.slice(0, 3).map((genre, index) => (
@@ -121,8 +122,18 @@ function MovieDetail({ category, id }: IDetailProps) {
                     actor.map(cast => <div key={cast.id}> {cast.name},</div>)}
                 </M.Poster_actor>
                 <M.Poster_director>
-                  <span>Director:</span>
-                  {director?.name}
+                  <span>
+                    {production?.known_for_department === "Production"
+                      ? "Production:"
+                      : production?.known_for_department === "Directing"
+                      ? "Director:"
+                      : null}
+                  </span>
+                  {production?.known_for_department === "Production"
+                    ? production.name
+                    : production?.known_for_department === "Directing"
+                    ? production.name
+                    : null}
                 </M.Poster_director>
               </M.Poster_acter_and_director>
             </M.Poster_infomation_bottom>
@@ -133,4 +144,4 @@ function MovieDetail({ category, id }: IDetailProps) {
   );
 }
 
-export default React.memo(MovieDetail);
+export default React.memo(SeriesDetail);

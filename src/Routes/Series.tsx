@@ -1,30 +1,44 @@
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import { getSeries } from "../api";
 import * as H from "../styled-components/StyledHome";
 import { makeImagePath } from "../utils/utils";
 import SeriesSlider from "../Components/Series/SeriesSlider";
+import { getSeries, IGetResult } from "../Components/apis/Mov_Ser_Api";
+import { useNavigate } from "react-router-dom";
 
-function Series() {
+function TvSeries() {
   // popular API
-  const { data: pop_data, isLoading: pop_Loading } = useQuery(
+  const { data: pop_data, isLoading: pop_Loading } = useQuery<IGetResult>(
     ["tv", "popular"],
     () => getSeries("popular")
   );
 
   // top_rated API
-  const { data: top_data, isLoading: top_Loading } = useQuery(
+  const { data: top_data, isLoading: top_Loading } = useQuery<IGetResult>(
     ["tv", "topRated"],
     () => getSeries("top_rated")
+  );
+
+  // on_the_air API
+  const { data: on_data, isLoading: on_Loading } = useQuery<IGetResult>(
+    ["tv", "ontheair"],
+    () => getSeries("on_the_air")
   );
 
   // 배너 이미지, results[0]의 경우 backdrop_path
   const imagePath = pop_data?.results[0].backdrop_path
     ? pop_data?.results[0].backdrop_path
     : pop_data?.results[0].poster_path;
+
+  // 배너 영역 > 모달 띄우는 버튼
+  const nowId = pop_data?.results[0].id;
+  const navigate = useNavigate();
+  const onInfoClick = (nowId: number) => {
+    navigate(`/tv/${nowId}`);
+  };
   return (
     <H.Wrapper>
-      {pop_Loading && top_Loading ? (
+      {pop_Loading && top_Loading && on_Loading ? (
         <H.Loader>Loading...</H.Loader>
       ) : (
         <>
@@ -52,13 +66,22 @@ function Series() {
                   </svg>
                   Play
                 </H.PlayBtn>
-                <H.InfoBtn>
-                  {/* onClick={() => onInfoClick(nowId!) */}ⓘ Information
+                <H.InfoBtn onClick={() => onInfoClick(nowId!)}>
+                  ⓘ Information
                 </H.InfoBtn>
               </H.Btn_Container>
             </H.Title_and_Overview>
           </H.Banner>
-          <SeriesSlider category="top" title="High Rated" data={top_data} />
+          <SeriesSlider
+            category="on_the_air"
+            title="On the Air"
+            data={on_data}
+          />
+          <SeriesSlider
+            category="top_rated"
+            title="High Rated"
+            data={top_data}
+          />
           <SeriesSlider
             category="popular"
             title="Trending Now"
@@ -66,8 +89,9 @@ function Series() {
           />
         </>
       )}
+      <H.Footer>© Copyright 2022. Leesu All rights reserved.</H.Footer>
     </H.Wrapper>
   );
 }
 
-export default Series;
+export default TvSeries;

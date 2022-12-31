@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
 import Home from "./Routes/Home";
 import Search from "./Routes/Search";
-import Series from "./Routes/Series";
+import TvSeries from "./Routes/Series";
 
 function App() {
   return (
@@ -11,7 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="movies/:movieId" element={<Home />} />
-        <Route path="/tv" element={<Series />} />
+        <Route path="/tv" element={<TvSeries />} />
+        <Route path="/tv/:tv_id" element={<TvSeries />} />
         <Route path="/search" element={<Search />} />
       </Routes>
     </BrowserRouter>

@@ -39,11 +39,15 @@ interface IForm {
 }
 
 function Header() {
-  const [searchOpen, setSearchOpen] = useState(false);
+  // 현재 URL 위치 확인
   const homeMatch = useMatch("/");
   const tvMatch = useMatch("tv");
   const searchMatch = useMatch("search");
-  const inputAnimation = useAnimation();
+
+  // 검색 아이콘 클릭 여부 확인
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // NAV 애니메이션을 위한 스크롤 감지
   const navAnimation = useAnimation();
   const { scrollY } = useScroll();
   useEffect(() => {
@@ -55,25 +59,30 @@ function Header() {
       }
     });
   }, [scrollY, navAnimation]);
+
+  // 검색 기능
+  const { register, handleSubmit, setValue } = useForm<IForm>();
   const navigate: NavigateFunction = useNavigate();
-  const { register, handleSubmit } = useForm<IForm>();
   const onValid = ({ keyword }: IForm) => {
     navigate(`/search?keyword=${keyword}`);
+    setValue("keyword", "");
   };
+
+  // 검색창 오픈 여부에 따른 애니메이션
+  const inputAnimation = useAnimation();
   const toggleSearch = () => {
     if (searchOpen) {
-      // 검색창이 열려있으면 닫혀지는 애니메이션
       inputAnimation.start({
         scaleX: 0,
       });
     } else {
-      // 검색창이 열리는 애니메이션
       inputAnimation.start({
         scaleX: 1,
       });
     }
     setSearchOpen(prev => !prev);
   };
+
   return (
     <Hed.Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Hed.Column>
@@ -123,11 +132,11 @@ function Header() {
             ></path>
           </motion.svg>
           <Hed.Input
-            {...register("keyword", { required: true, minLength: 2 })}
             animate={inputAnimation}
             initial={{ scaleX: 0 }}
             transition={{ type: "linear" }}
             placeholder="Title, Person, Genre"
+            {...register("keyword", { required: true, minLength: 2 })}
           />
         </Hed.Search>
       </Hed.Column>

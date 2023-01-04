@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Loader = styled.div`
-  height: 20vh;
+  height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +36,7 @@ export const Title_and_Overview = styled.div`
   // 타이틀, 설명 container
   width: 50vw;
   height: 50vh;
-  margin-top: 30vh;
+  margin-top: 20vh;
   margin-left: 60px;
 `;
 
@@ -199,7 +199,7 @@ export const nextBtn = styled.div`
 // ---------- 푸터 영역
 export const Footer = styled.div`
   position: relative;
-  bottom: 60px;
+  bottom: 50px;
   font-size: 13px;
   text-align: center;
   color: #7c7c7c;

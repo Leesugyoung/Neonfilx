@@ -23,6 +23,7 @@ const RowVariants: Variants = {
     };
   },
 };
+
 const BoxHoverVariants = {
   initial: { scale: 1 },
   hover: {
@@ -35,6 +36,7 @@ const BoxHoverVariants = {
     },
   },
 };
+
 const infoVariants = {
   hover: {
     opacity: 1,
@@ -139,7 +141,7 @@ const SeriesSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
               resultsData.map((Series, id) => (
                 <H.RowBox
                   onClick={() => onBoxClicked(Series.id)}
-                  key={index + id}
+                  key={Series.id}
                   variants={BoxHoverVariants}
                   initial="initial"
                   whileHover="hover"

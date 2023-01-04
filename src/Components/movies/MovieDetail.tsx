@@ -23,7 +23,7 @@ const modalVariants = {
 // -----------------------
 
 interface IDetailProps {
-  category: string;
+  category?: string;
   id: string;
 }
 

@@ -34,7 +34,6 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
     () => getSeriesDetail(tv_id)
   );
 
-  console.log(detailData);
   // Credit API
   const { data: creditData, isLoading: creditLoading } = useQuery<IGetCredit>(
     ["tv", `${category}_credit`],
@@ -114,12 +113,19 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
             </M.Poster_infomation_top>
 
             <M.Poster_infomation_bottom>
-              <M.Poster_overview>{detailData?.overview}</M.Poster_overview>
+              <M.Poster_overview>
+                {detailData?.overview === ""
+                  ? "There is no overview."
+                  : detailData?.overview}
+              </M.Poster_overview>
               <M.Poster_acter_and_director>
                 <M.Poster_actor>
                   <span>Casting:</span>
-                  {actor &&
-                    actor.map(cast => <div key={cast.id}> {cast.name},</div>)}
+                  {actor?.length === 0
+                    ? "No casting information."
+                    : actor?.map(cast => (
+                        <div key={cast.id}> {cast.name},</div>
+                      ))}
                 </M.Poster_actor>
                 <M.Poster_director>
                   <span>

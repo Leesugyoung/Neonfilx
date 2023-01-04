@@ -3,7 +3,7 @@ import { getMovies, IGetResult } from "../Components/apis/Mov_Ser_Api";
 import * as H from "../styled-components/StyledHome";
 import MovieSlider from "../Components/movies/MovieSlider";
 import { Helmet } from "react-helmet";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { makeImagePath } from "../utils/utils";
 
 function Home() {

@@ -138,7 +138,7 @@ const SeriesSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
             transition={{ type: "tween", duration: 1 }}
           >
             {resultsData &&
-              resultsData.map((Series, id) => (
+              resultsData.map(Series => (
                 <H.RowBox
                   onClick={() => onBoxClicked(Series.id)}
                   key={Series.id}

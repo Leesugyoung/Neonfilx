@@ -6,7 +6,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   getSearchMovie,
   getSearchTv,
@@ -15,7 +15,8 @@ import {
 import styled from "styled-components";
 import { makeImagePath } from "../utils/utils";
 import { motion } from "framer-motion";
-import * as M from "../styled-components/StyledModal";
+import SearchMovie from "../Components/Searchs/SearchMovie";
+import SearchSeries from "../Components/Searchs/SearchSeries";
 
 const Wrapper = styled.div`
   margin-top: 80px;
@@ -138,13 +139,16 @@ const infoVariants = {
 function Search() {
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get("keyword");
+  const navigate = useNavigate();
 
-  // keyword가 존재할 때만 검색어 API 가져오기
+  const [m_Id, setm_Id] = useState<number>();
+
   const { data: movie_Data, refetch: movie_refetch } = useQuery<IGetSearch>(
     ["search", "movie"],
     () => getSearchMovie(keyword!),
     { enabled: !!keyword }
   );
+  console.log(movie_Data);
 
   const { data: tv_Data, refetch: tv_refetch } = useQuery<IGetSearch>(
     ["search", "tv"],
@@ -152,10 +156,14 @@ function Search() {
     { enabled: !!keyword }
   );
 
-  const navigate = useNavigate();
+  const MovieClick = (movieId: number) =>
+    navigate(`/search/${movieId}?keyword=${keyword}`);
   const MovieMatch: PathMatch<string> | null = useMatch(
     "/search/:movieId:keyword"
   );
+
+  const seiresClick = (tv_id: number) =>
+    navigate(`/search/${tv_id}?keyword=${keyword}`);
   const seiresMatch: PathMatch<string> | null = useMatch(
     "/search/:tv_id:keyword"
   );
@@ -167,6 +175,11 @@ function Search() {
       tv_refetch();
     }
   }, [keyword]);
+
+  // movie_data detail 정보
+  const onIdtarget = (id: number) => {
+    setm_Id(id);
+  };
 
   return (
     <>
@@ -195,7 +208,8 @@ function Search() {
               {movie_Data?.results.map(data => (
                 <RowBox
                   onClick={() => {
-                    navigate(`/search/:movieId?keyword=${keyword}`);
+                    onIdtarget(data.id);
+                    MovieClick(data.id);
                   }}
                   variants={BoxHoverVariants}
                   initial="initial"
@@ -222,7 +236,9 @@ function Search() {
             <SearchRow_series>
               {tv_Data?.results.map(data => (
                 <RowBox
-                  onClick={() => navigate(`/search/:tv_id?keyword=${keyword}`)}
+                  onClick={() => {
+                    seiresClick(data.id);
+                  }}
                   variants={BoxHoverVariants}
                   initial="initial"
                   whileHover="hover"
@@ -244,25 +260,9 @@ function Search() {
         )}
       </Wrapper>
       {/* 오버레이 영역 */}
-      {MovieMatch && seiresMatch ? (
+      {MovieMatch ? (
         <>
-          <M.Overlay
-            variants={M.overlayVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            onClick={() => navigate(-1)}
-          />
-          <M.Modal
-            variants={M.modalVariants}
-            initial="initial"
-            animate="click"
-            exit="exit"
-          >
-            <M.Modal_Poster />
-            <M.Poster_prevBtn onClick={() => navigate(-1)}>✕</M.Poster_prevBtn>
-            <M.Poster_Title></M.Poster_Title>
-          </M.Modal>
+          <SearchMovie movie_Data={movie_Data!} m_Id={m_Id!} />
         </>
       ) : null}
     </>

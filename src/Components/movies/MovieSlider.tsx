@@ -67,8 +67,10 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
   const [leaving, setLeaving] = useState(false);
   const toggleLeaving = () => setLeaving(prev => !prev);
 
-  // "/movies/:movieId" URL 로 이동하였는지 확인
   const navigate = useNavigate();
+  const onBoxClicked = (movieId: number) => {
+    navigate(`/movies/${movieId}`);
+  };
   const bigMovieMatch: PathMatch<string> | null = useMatch("/movies/:movieId");
 
   // - nextIndex : index state 증가 함수
@@ -125,7 +127,7 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
             {resultsData &&
               resultsData.map((movie, index) => (
                 <H.RowBox
-                  onClick={() => navigate(`/movies/:movieId`)}
+                  onClick={() => onBoxClicked(movie.id)}
                   key={index + movie.id}
                   variants={BoxHoverVariants}
                   initial="initial"

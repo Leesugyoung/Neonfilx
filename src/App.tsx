@@ -1,8 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
-import MovieDetail from "./Components/movies/MovieDetail";
-import SearchDetail from "./Components/Search/SearchDetail";
-import SeriesDetail from "./Components/Series/SeriesDetail";
 import Movie from "./Routes/Movie";
 import Search from "./Routes/Search";
 import TvSeries from "./Routes/Series";
@@ -19,7 +16,7 @@ function App() {
           <Route path=":tv_id" element={<TvSeries />} />
         </Route>
         <Route path="/search" element={<Search />}>
-          <Route path=":movieId" element={<SearchDetail id={"21115"} />} />
+          <Route path=":movieId" element={<Search />} />
           <Route path=":tv_id" element={<Search />} />
         </Route>
       </Routes>

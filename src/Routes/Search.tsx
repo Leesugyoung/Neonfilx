@@ -10,12 +10,12 @@ import { useEffect } from "react";
 import {
   getSearchMovie,
   getSearchTv,
-  IGetSearchKey,
+  IGetSearch,
 } from "../Components/apis/SearchApi";
 import styled from "styled-components";
 import { makeImagePath } from "../utils/utils";
 import { motion } from "framer-motion";
-import SearchDetail from "../Components/Search/SearchDetail";
+import * as M from "../styled-components/StyledModal";
 
 const Wrapper = styled.div`
   margin-top: 80px;
@@ -100,6 +100,16 @@ const RowBox_Info = styled(motion.div)`
   }
 `;
 
+export const Modal_Poster = styled.div`
+  width: 100%;
+  height: 400px;
+  background-color: ${props =>
+    props.theme.black.lighter}; // bgphoto 가 없을 경우 띄워지는
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+`;
+
 // ----- Variants
 const BoxHoverVariants = {
   initial: { scale: 1 },
@@ -126,18 +136,18 @@ const infoVariants = {
 };
 
 function Search() {
-  // Header에서 보낸 query-argument
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get("keyword");
 
   // keyword가 존재할 때만 검색어 API 가져오기
-  const { data: movie_Data, refetch: movie_refetch } = useQuery<IGetSearchKey>(
+  const { data: movie_Data, refetch: movie_refetch } = useQuery<IGetSearch>(
     ["search", "movie"],
     () => getSearchMovie(keyword!),
+
     { enabled: !!keyword }
   );
 
-  const { data: tv_Data, refetch: tv_refetch } = useQuery<IGetSearchKey>(
+  const { data: tv_Data, refetch: tv_refetch } = useQuery<IGetSearch>(
     ["search", "tv"],
     () => getSearchTv(keyword!),
     {
@@ -145,17 +155,28 @@ function Search() {
     }
   );
 
-  // Box 클릭시 url 이동
   const navigate = useNavigate();
-  const onClicked = (id: number) => {
-    navigate(`/search/${id}?keyword=${keyword}`);
+  // movie- Box 클릭시 url 이동
+
+  const MovieClick = (movieId: number) => {
+    navigate(`/search/${movieId}?keyword=${keyword}`);
   };
-  // URL 로 이동하였는지 확인
-  /* const Match: PathMatch<string> | null = useMatch(
-    `/search/${id}?keyword=${keyword}`
-  ); */
+  const MovieMatch: PathMatch<string> | null = useMatch(
+    "/search/:movieId:keyword"
+  );
+
+  // seires- Box 클릭시 url 이동
+  const SeriesClick = (tv_id: number) => {
+    navigate(`/search/${tv_id}?keyword=${keyword}`);
+  };
+  const seiresMatch: PathMatch<string> | null = useMatch(
+    "/search/:tv_id:keyword"
+  );
+
+  // 뒤로가기
+  const onOverlayClick = () => navigate(-1);
+
   // keyword가 변경될 때만 movie_refetch()와 tv_refetch()가 실행될 수 있도록
-  // 검색어가 바뀌었을 때 화면에 바로 적용될 수 있도록!
   useEffect(() => {
     if (keyword) {
       movie_refetch();
@@ -189,7 +210,9 @@ function Search() {
             <SearchRow_movie>
               {movie_Data?.results.map(data => (
                 <RowBox
-                  onClick={() => onClicked(data.id)}
+                  onClick={() => {
+                    MovieClick(data.id);
+                  }}
                   variants={BoxHoverVariants}
                   initial="initial"
                   whileHover="hover"
@@ -215,7 +238,7 @@ function Search() {
             <SearchRow_series>
               {tv_Data?.results.map(data => (
                 <RowBox
-                  onClick={() => onClicked(data.id)}
+                  onClick={() => SeriesClick(data.id)}
                   variants={BoxHoverVariants}
                   initial="initial"
                   whileHover="hover"
@@ -237,6 +260,26 @@ function Search() {
         )}
       </Wrapper>
       {/* 오버레이 영역 */}
+      {MovieMatch && seiresMatch ? (
+        <>
+          <M.Overlay
+            variants={M.overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          />
+          <M.Modal
+            variants={M.modalVariants}
+            initial="initial"
+            animate="click"
+            exit="exit"
+          >
+            <M.Modal_Poster />
+            <M.Poster_prevBtn onClick={onOverlayClick}>✕</M.Poster_prevBtn>
+            <M.Poster_Title></M.Poster_Title>
+          </M.Modal>
+        </>
+      ) : null}
     </>
   );
 }

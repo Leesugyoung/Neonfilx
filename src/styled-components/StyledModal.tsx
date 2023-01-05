@@ -1,6 +1,20 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
+// ----------Variants----
+export const overlayVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 0.4 },
+  exit: { opacity: 0 },
+};
+
+export const modalVariants = {
+  initial: { opacity: 0 },
+  click: { opacity: 1, transition: { duration: 0.5 } },
+  exit: { opacity: 0 },
+};
+// -----------------------
+
 export const Overlay = styled(motion.div)`
   position: fixed;
   top: 0;

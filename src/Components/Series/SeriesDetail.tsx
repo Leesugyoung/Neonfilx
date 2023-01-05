@@ -23,20 +23,20 @@ const modalVariants = {
 // -----------------------
 
 interface IDetailProps {
-  category: string;
+  category?: string;
   tv_id: string;
 }
 
 function SeriesDetail({ category, tv_id }: IDetailProps) {
   // Detail API
   const { data: detailData, isLoading: detailLoading } = useQuery<IGetDetail>(
-    ["tv", `${category}_detail`],
+    ["Series", `${category}_detail`],
     () => getSeriesDetail(tv_id)
   );
 
   // Credit API
   const { data: creditData, isLoading: creditLoading } = useQuery<IGetCredit>(
-    ["tv", `${category}_credit`],
+    ["Series", `${category}_credit`],
     () => getSeriesCredit(tv_id)
   );
 
@@ -150,4 +150,4 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
   );
 }
 
-export default React.memo(SeriesDetail);
+export default SeriesDetail;

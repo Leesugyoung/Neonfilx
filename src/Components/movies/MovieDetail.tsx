@@ -8,20 +8,6 @@ import * as M from "../../styled-components/StyledModal";
 import { makeImagePath } from "../../utils/utils";
 import { getMovieCredit, getMovieDetail } from "../apis/Mov_Ser_Api";
 
-// ----------Variants----
-const overlayVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 0.4 },
-  exit: { opacity: 0 },
-};
-
-const modalVariants = {
-  initial: { opacity: 0 },
-  click: { opacity: 1, transition: { duration: 0.5 } },
-  exit: { opacity: 0 },
-};
-// -----------------------
-
 interface IDetailProps {
   category?: string;
   id: string;
@@ -63,14 +49,14 @@ function MovieDetail({ category, id }: IDetailProps) {
       ) : (
         <>
           <M.Overlay
-            variants={overlayVariants}
+            variants={M.overlayVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
             onClick={onOverlayClick}
           />
           <M.Modal
-            variants={modalVariants}
+            variants={M.modalVariants}
             initial="initial"
             animate="click"
             exit="exit"
@@ -133,4 +119,4 @@ function MovieDetail({ category, id }: IDetailProps) {
   );
 }
 
-export default React.memo(MovieDetail);
+export default MovieDetail;

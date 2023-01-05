@@ -143,38 +143,22 @@ function Search() {
   const { data: movie_Data, refetch: movie_refetch } = useQuery<IGetSearch>(
     ["search", "movie"],
     () => getSearchMovie(keyword!),
-
     { enabled: !!keyword }
   );
 
   const { data: tv_Data, refetch: tv_refetch } = useQuery<IGetSearch>(
     ["search", "tv"],
     () => getSearchTv(keyword!),
-    {
-      enabled: !!keyword,
-    }
+    { enabled: !!keyword }
   );
 
   const navigate = useNavigate();
-  // movie- Box 클릭시 url 이동
-
-  const MovieClick = (movieId: number) => {
-    navigate(`/search/${movieId}?keyword=${keyword}`);
-  };
   const MovieMatch: PathMatch<string> | null = useMatch(
     "/search/:movieId:keyword"
   );
-
-  // seires- Box 클릭시 url 이동
-  const SeriesClick = (tv_id: number) => {
-    navigate(`/search/${tv_id}?keyword=${keyword}`);
-  };
   const seiresMatch: PathMatch<string> | null = useMatch(
     "/search/:tv_id:keyword"
   );
-
-  // 뒤로가기
-  const onOverlayClick = () => navigate(-1);
 
   // keyword가 변경될 때만 movie_refetch()와 tv_refetch()가 실행될 수 있도록
   useEffect(() => {
@@ -211,7 +195,7 @@ function Search() {
               {movie_Data?.results.map(data => (
                 <RowBox
                   onClick={() => {
-                    MovieClick(data.id);
+                    navigate(`/search/:movieId?keyword=${keyword}`);
                   }}
                   variants={BoxHoverVariants}
                   initial="initial"
@@ -238,7 +222,7 @@ function Search() {
             <SearchRow_series>
               {tv_Data?.results.map(data => (
                 <RowBox
-                  onClick={() => SeriesClick(data.id)}
+                  onClick={() => navigate(`/search/:tv_id?keyword=${keyword}`)}
                   variants={BoxHoverVariants}
                   initial="initial"
                   whileHover="hover"
@@ -267,6 +251,7 @@ function Search() {
             initial="hidden"
             animate="visible"
             exit="exit"
+            onClick={() => navigate(-1)}
           />
           <M.Modal
             variants={M.modalVariants}
@@ -275,7 +260,7 @@ function Search() {
             exit="exit"
           >
             <M.Modal_Poster />
-            <M.Poster_prevBtn onClick={onOverlayClick}>✕</M.Poster_prevBtn>
+            <M.Poster_prevBtn onClick={() => navigate(-1)}>✕</M.Poster_prevBtn>
             <M.Poster_Title></M.Poster_Title>
           </M.Modal>
         </>

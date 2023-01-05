@@ -1,5 +1,5 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import { IGetResult } from "./apis/Mov_Ser_Api";
+import { IGetResult } from "./apis/Movi_Ser_Api";
 import * as H from "../styled-components/StyledHome";
 import { makeImagePath } from "../utils/utils";
 import MovieSlider from "./movies/MovieSlider";

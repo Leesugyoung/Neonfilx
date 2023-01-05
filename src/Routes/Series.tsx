@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import * as H from "../styled-components/StyledHome";
 import { makeImagePath } from "../utils/utils";
 import SeriesSlider from "../Components/Series/SeriesSlider";
-import { getSeries, IGetResult } from "../Components/apis/Mov_Ser_Api";
+import { getSeries, IGetResult } from "../Components/apis/Movi_Ser_Api";
 import { useNavigate } from "react-router-dom";
 
 function TvSeries() {
@@ -33,9 +33,6 @@ function TvSeries() {
   // 배너 영역 > 모달 띄우는 버튼
   const nowId = pop_data?.results[0].id;
   const navigate = useNavigate();
-  const onInfoClick = (nowId: number) => {
-    navigate(`/tv/${nowId}`);
-  };
   return (
     <H.Wrapper>
       {pop_Loading && top_Loading && on_Loading ? (
@@ -66,7 +63,7 @@ function TvSeries() {
                   </svg>
                   Play
                 </H.PlayBtn>
-                <H.InfoBtn onClick={() => onInfoClick(nowId!)}>
+                <H.InfoBtn onClick={() => navigate(`/tv/${nowId}`)}>
                   ⓘ Information
                 </H.InfoBtn>
               </H.Btn_Container>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AnimatePresence, Variants } from "framer-motion";
 import { makeImagePath } from "../../utils/utils";
 import { PathMatch, useMatch } from "react-router-dom";
-import { IGetResult } from "../apis/Mov_Ser_Api";
+import { IGetResult } from "../apis/Movi_Ser_Api";
 import MovieDetail from "./MovieDetail";
 
 // ----------Variants----
@@ -67,13 +67,8 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
   const [leaving, setLeaving] = useState(false);
   const toggleLeaving = () => setLeaving(prev => !prev);
 
-  // - Box 클릭시 url 이동
-  const navigate = useNavigate();
-  const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
-  };
-
   // "/movies/:movieId" URL 로 이동하였는지 확인
+  const navigate = useNavigate();
   const bigMovieMatch: PathMatch<string> | null = useMatch("/movies/:movieId");
 
   // - nextIndex : index state 증가 함수
@@ -130,7 +125,7 @@ const MovieSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
             {resultsData &&
               resultsData.map((movie, index) => (
                 <H.RowBox
-                  onClick={() => onBoxClicked(movie.id)}
+                  onClick={() => navigate(`/movies/:movieId`)}
                   key={index + movie.id}
                   variants={BoxHoverVariants}
                   initial="initial"

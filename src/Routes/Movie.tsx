@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMovies, IGetResult } from "../Components/apis/Mov_Ser_Api";
+import { getMovies, IGetResult } from "../Components/apis/Movi_Ser_Api";
 import * as H from "../styled-components/StyledHome";
 import MovieSlider from "../Components/movies/MovieSlider";
 import { Helmet } from "react-helmet";
@@ -34,9 +34,7 @@ function Home() {
   // 배너 영역 > 모달 띄우는 버튼
   const nowId = now_data?.results[0].id;
   const navigate = useNavigate();
-  const onInfoClick = (nowId: number) => {
-    navigate(`/movies/${nowId}`);
-  };
+
   return (
     <H.Wrapper>
       {now_Loading && pop_Loading && top_Loading && up_Loading ? (
@@ -69,7 +67,7 @@ function Home() {
                   </svg>
                   Play
                 </H.PlayBtn>
-                <H.InfoBtn onClick={() => onInfoClick(nowId!)}>
+                <H.InfoBtn onClick={() => navigate(`/movies/${nowId}`)}>
                   ⓘ Information
                 </H.InfoBtn>
               </H.Btn_Container>

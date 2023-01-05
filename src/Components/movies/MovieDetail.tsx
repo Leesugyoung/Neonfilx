@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { IGetCredit, IGetDetail } from "../apis/Mov_Ser_Api";
+import { IGetCredit, IGetDetail } from "../apis/Movi_Ser_Api";
 import * as H from "../../styled-components/StyledHome";
 import * as M from "../../styled-components/StyledModal";
 import { makeImagePath } from "../../utils/utils";
-import { getMovieCredit, getMovieDetail } from "../apis/Mov_Ser_Api";
+import { getMovieCredit, getMovieDetail } from "../apis/Movi_Ser_Api";
 
 interface IDetailProps {
   category?: string;
@@ -14,9 +14,11 @@ interface IDetailProps {
 }
 
 function MovieDetail({ category, id }: IDetailProps) {
+  const navigate = useNavigate();
+
   // movie detail API
   const { data: detailData, isLoading: detailLoading } = useQuery<IGetDetail>(
-    ["movie", `${category}_detail`],
+    ["movie", `detail`],
     () => getMovieDetail(id)
   );
 
@@ -25,10 +27,6 @@ function MovieDetail({ category, id }: IDetailProps) {
     ["movie", `${category}_credit`],
     () => getMovieCredit(id)
   );
-
-  // 오버레이 클릭 시 뒤로가기 기능
-  const navigate = useNavigate();
-  const onOverlayClick = () => navigate(-1);
 
   // 출연진 5명 불러오기
   const actor = creditData?.cast.slice(0, 5);
@@ -53,7 +51,7 @@ function MovieDetail({ category, id }: IDetailProps) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            onClick={onOverlayClick}
+            onClick={() => navigate(-1)}
           />
           <M.Modal
             variants={M.modalVariants}
@@ -80,7 +78,7 @@ function MovieDetail({ category, id }: IDetailProps) {
                 )})`,
               }}
             />
-            <M.Poster_prevBtn onClick={onOverlayClick}>✕</M.Poster_prevBtn>
+            <M.Poster_prevBtn onClick={() => navigate(-1)}>✕</M.Poster_prevBtn>
             <M.Poster_Title>{detailData?.title}</M.Poster_Title>
             <M.Poster_infomation_top>
               <span>{sub_Openday}</span>

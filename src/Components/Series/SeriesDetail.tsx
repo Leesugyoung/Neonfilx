@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { IGetCredit, IGetDetail } from "../apis/Mov_Ser_Api";
+import { IGetCredit, IGetDetail } from "../apis/Movi_Ser_Api";
 import * as H from "../../styled-components/StyledHome";
 import * as M from "../../styled-components/StyledModal";
 import { makeImagePath } from "../../utils/utils";
-import { getSeriesCredit, getSeriesDetail } from "../apis/Mov_Ser_Api";
+import { getSeriesCredit, getSeriesDetail } from "../apis/Movi_Ser_Api";
 
 // ----------Variants----
 const overlayVariants = {
@@ -28,6 +28,8 @@ interface IDetailProps {
 }
 
 function SeriesDetail({ category, tv_id }: IDetailProps) {
+  const navigate = useNavigate();
+
   // Detail API
   const { data: detailData, isLoading: detailLoading } = useQuery<IGetDetail>(
     ["Series", `${category}_detail`],
@@ -39,10 +41,6 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
     ["Series", `${category}_credit`],
     () => getSeriesCredit(tv_id)
   );
-
-  // 오버레이 클릭 시 뒤로가기 기능
-  const navigate = useNavigate();
-  const onOverlayClick = () => navigate(-1);
 
   // 출연진 5명 불러오기
   const actor = creditData?.cast.slice(0, 5);
@@ -69,7 +67,7 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            onClick={onOverlayClick}
+            onClick={() => navigate(-1)}
           />
           <M.Modal
             variants={modalVariants}
@@ -89,12 +87,14 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
             <M.Modal_Poster
               style={{
                 backgroundImage: ` linear-gradient(to top, #181818, transparent), url(${makeImagePath(
-                  detailData!.backdrop_path,
+                  detailData!.backdrop_path
+                    ? detailData!.backdrop_path
+                    : detailData!.poster_path,
                   "w500"
                 )})`,
               }}
             />
-            <M.Poster_prevBtn onClick={onOverlayClick}>✕</M.Poster_prevBtn>
+            <M.Poster_prevBtn onClick={() => navigate(-1)}>✕</M.Poster_prevBtn>
             <M.Poster_Title>{detailData?.name}</M.Poster_Title>
             <M.Poster_infomation_top>
               <span>{sub_Openday}</span>

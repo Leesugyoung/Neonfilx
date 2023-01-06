@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMovies, IGetResult } from "../Components/apis/Movi_Ser_Api";
+import { getMovies, IGetResult } from "../apis/Movi_Ser_Api";
 import * as H from "../styled-components/StyledHome";
 import MovieSlider from "../Components/movies/MovieSlider";
 import { Helmet } from "react-helmet";

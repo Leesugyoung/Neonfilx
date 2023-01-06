@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AnimatePresence, Variants } from "framer-motion";
 import { makeImagePath } from "../../utils/utils";
 import { PathMatch, useMatch } from "react-router-dom";
-import { IGetResult } from "../apis/Movi_Ser_Api";
+import { IGetResult } from "../../apis/Movi_Ser_Api";
 import SeriesDetail from "./SeriesDetail";
 
 // ----------Variants----

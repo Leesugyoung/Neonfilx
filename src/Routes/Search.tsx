@@ -140,7 +140,7 @@ function Search() {
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get("keyword");
   const navigate = useNavigate();
-
+  // 클릭한 영화의 id 값
   const [m_Id, setm_Id] = useState<number>();
 
   const { data: movie_Data, refetch: movie_refetch } = useQuery<IGetSearch>(
@@ -148,7 +148,6 @@ function Search() {
     () => getSearchMovie(keyword!),
     { enabled: !!keyword }
   );
-  console.log(movie_Data);
 
   const { data: tv_Data, refetch: tv_refetch } = useQuery<IGetSearch>(
     ["search", "tv"],
@@ -180,6 +179,8 @@ function Search() {
   const onIdtarget = (id: number) => {
     setm_Id(id);
   };
+  const SearchMoviedata = movie_Data?.results.find(item => item.id === m_Id);
+  const SearchSeriesdata = tv_Data?.results.find(item => item.id === m_Id);
 
   return (
     <>
@@ -260,11 +261,11 @@ function Search() {
         )}
       </Wrapper>
       {/* 오버레이 영역 */}
-      {MovieMatch ? (
-        <>
-          <SearchMovie movie_Data={movie_Data!} m_Id={m_Id!} />
-        </>
-      ) : null}
+      {/*       {SearchMoviedata ? (
+        <SearchMovie Mdata={SearchMoviedata!} />
+      ) : (
+        <SearchSeries Sdata={SearchSeriesdata!} />
+      )} */}
     </>
   );
 }

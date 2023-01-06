@@ -1,19 +1,18 @@
 import * as M from "../../styled-components/StyledModal";
 import { useNavigate } from "react-router-dom";
-import { IGetSearch } from "../apis/SearchApi";
+import { ISearchResult } from "../apis/SearchApi";
 import { makeImagePath } from "../../utils/utils";
 
 interface Iprops {
-  movie_Data: IGetSearch;
-  m_Id: number;
+  Mdata: ISearchResult;
 }
 
-function SearchMovie({ movie_Data, m_Id }: Iprops) {
+function SearchMovie({ Mdata }: Iprops) {
   const navigate = useNavigate();
-  const Moviedetail = movie_Data?.results.find(item => item.id === m_Id);
+  // 클릭한 영화의 id 와 영화데이터 안의 id 가 같은 데이터를 찾아옴
 
   // 영화 개봉날짜
-  const sub_Openday = Moviedetail?.release_date.substring(0, 4);
+  const sub_Openday = Mdata?.release_date.substring(0, 4);
   return (
     <>
       <M.Overlay
@@ -32,32 +31,29 @@ function SearchMovie({ movie_Data, m_Id }: Iprops) {
         <M.Modal_Poster
           style={{
             backgroundImage: ` linear-gradient(to top, #181818, transparent), url(${makeImagePath(
-              Moviedetail!.backdrop_path
-                ? Moviedetail!.backdrop_path
-                : Moviedetail!.poster_path,
+              Mdata!.backdrop_path ? Mdata!.backdrop_path : Mdata!.poster_path,
               "w500"
             )})`,
           }}
         />
         <M.Poster_prevBtn onClick={() => navigate(-1)}>✕</M.Poster_prevBtn>
         <M.Poster_Title>
-          {Moviedetail?.name ? Moviedetail.name : Moviedetail?.title}
+          {Mdata?.name ? Mdata.name : Mdata?.title}
         </M.Poster_Title>
+        <M.Search_OriginTitle>{Mdata?.original_title}</M.Search_OriginTitle>
         <M.Poster_infomation_top>
           <span>{sub_Openday}</span>
           <span>
             ⭐
-            {Moviedetail?.vote_average
-              ? (Moviedetail?.vote_average).toFixed(1)
+            {Mdata?.vote_average
+              ? (Mdata?.vote_average).toFixed(1)
               : "not vote"}
           </span>
         </M.Poster_infomation_top>
         <M.Poster_infomation_bottom>
-          <M.Poster_overview>
-            {Moviedetail?.overview === ""
-              ? "There is no overview."
-              : Moviedetail?.overview}
-          </M.Poster_overview>
+          <M.Search_overview>
+            {Mdata?.overview === "" ? "There is no overview." : Mdata?.overview}
+          </M.Search_overview>
         </M.Poster_infomation_bottom>
       </M.Modal>
     </>

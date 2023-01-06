@@ -44,7 +44,6 @@ export const Modal_Poster = styled.div`
   height: 400px;
   background-position: center center;
   background-size: cover;
-  image-rendering: -webkit-optimize-contrast;
 `;
 
 export const Poster_prevBtn = styled.div`
@@ -63,6 +62,7 @@ export const Poster_prevBtn = styled.div`
 `;
 
 export const Poster_Title = styled.div`
+  letter-spacing: 1px;
   width: 95%;
   height: 70px;
   color: ${props => props.theme.white.lighter};
@@ -82,7 +82,7 @@ export const Poster_Title = styled.div`
 
 export const Poster_infomation_top = styled.div`
   // 1.개봉년도  2.장르  3.평균 평점 리스트
-  top: -60px;
+  top: -50px;
   font-size: 18px;
   padding-left: 50px;
   position: relative;
@@ -117,7 +117,7 @@ export const Poster_infomation_bottom = styled.div`
   display: flex;
   flex-direction: row;
   position: relative;
-  top: -30px;
+  top: -20px;
 `;
 
 export const Poster_overview = styled.div`
@@ -157,4 +157,28 @@ export const Poster_director = styled.div`
     color: #777777;
     margin-right: 5px;
   }
+`;
+
+// 검색페이지 전용
+export const Search_overview = styled.div`
+  width: 100%;
+  font-size: 16px;
+  color: ${props => props.theme.white.lighter};
+  background-color: ${props => props.theme.black.darker};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 7; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+`;
+
+export const Search_OriginTitle = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 50px;
+  position: relative;
+  top: -90px;
+  letter-spacing: 1px;
+  color: #7a7a7a;
 `;

@@ -10,6 +10,7 @@ export interface ISearchResult {
   vote_average: number;
   overview: string;
   release_date: string;
+  original_title: string;
 }
 
 export interface IGetSearch {

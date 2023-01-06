@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-helmet": "^6.1.6"
+    "@types/react-helmet": "^6.1.6",
+    "file-loader": "^6.2.0"
   }
 }

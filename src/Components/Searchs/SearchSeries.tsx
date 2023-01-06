@@ -1,15 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import * as M from "../../styled-components/StyledModal";
-import { IGetSearch } from "../apis/SearchApi";
+import { makeImagePath } from "../../utils/utils";
+import { ISearchResult } from "../apis/SearchApi";
 
 interface Iprops {
-  tv_Data: IGetSearch;
-  m_Id: number;
+  Sdata: ISearchResult;
 }
 
-function SearchSeries({ tv_Data, m_Id }: Iprops) {
+function SearchSeries({ Sdata }: Iprops) {
   const navigate = useNavigate();
-  const Seriesdetail = tv_Data?.results.find(item => item.id === m_Id);
+
+  // 영화 개봉날짜
+  const sub_Openday = Sdata?.release_date.substring(0, 4);
   return (
     <>
       <M.Overlay
@@ -25,10 +27,37 @@ function SearchSeries({ tv_Data, m_Id }: Iprops) {
         animate="click"
         exit="exit"
       >
-        <M.Modal_Poster />
+        <M.Modal_Poster
+          style={{
+            backgroundImage: `linear-gradient(to top, #181818, transparent), url(${
+              Sdata && (Sdata.backdrop_path || Sdata.poster_path)
+                ? makeImagePath(
+                    Sdata.backdrop_path || Sdata.poster_path,
+                    "w500"
+                  )
+                : "../../assets/Noimage.png"
+            })`,
+          }}
+        />
         <M.Poster_prevBtn onClick={() => navigate(-1)}>✕</M.Poster_prevBtn>
-
-        <M.Poster_Title></M.Poster_Title>
+        <M.Poster_Title>
+          {Sdata?.name ? Sdata.name : Sdata?.title}
+        </M.Poster_Title>
+        <M.Search_OriginTitle>{Sdata?.original_title}</M.Search_OriginTitle>
+        <M.Poster_infomation_top>
+          <span>{sub_Openday}</span>
+          <span>
+            ⭐
+            {Sdata?.vote_average
+              ? (Sdata?.vote_average).toFixed(1)
+              : "not vote"}
+          </span>
+        </M.Poster_infomation_top>
+        <M.Poster_infomation_bottom>
+          <M.Search_overview>
+            {Sdata?.overview === "" ? "There is no overview." : Sdata?.overview}
+          </M.Search_overview>
+        </M.Poster_infomation_bottom>
       </M.Modal>
     </>
   );

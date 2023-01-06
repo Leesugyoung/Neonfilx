@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import * as H from "../styled-components/StyledHome";
 import { makeImagePath } from "../utils/utils";
 import SeriesSlider from "../Components/Series/SeriesSlider";
-import { getSeries, IGetResult } from "../Components/apis/Movi_Ser_Api";
+import { getSeries, IGetResult } from "../apis/Movi_Ser_Api";
 import { useNavigate } from "react-router-dom";
 
 function TvSeries() {

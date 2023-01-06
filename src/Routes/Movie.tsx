@@ -32,8 +32,8 @@ function Home() {
   );
 
   // 배너 영역 > 모달 띄우는 버튼
-  const nowId = now_data?.results[0].id;
   const navigate = useNavigate();
+  const nowId = now_data?.results[0].id;
 
   return (
     <H.Wrapper>

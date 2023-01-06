@@ -7,6 +7,7 @@ import { getSeries, IGetResult } from "../apis/Movi_Ser_Api";
 import { useNavigate } from "react-router-dom";
 
 function TvSeries() {
+  const navigate = useNavigate();
   // popular API
   const { data: pop_data, isLoading: pop_Loading } = useQuery<IGetResult>(
     ["tv", "popular"],
@@ -32,7 +33,6 @@ function TvSeries() {
 
   // 배너 영역 > 모달 띄우는 버튼
   const nowId = pop_data?.results[0].id;
-  const navigate = useNavigate();
   return (
     <H.Wrapper>
       {pop_Loading && top_Loading && on_Loading ? (

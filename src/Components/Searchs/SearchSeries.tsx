@@ -27,8 +27,9 @@ function SearchSeries({ tvData, keyword }: ISeriesprops) {
   };
   const Sdata = tvData?.results.find(item => item.id === s_Id);
 
+  console.log(Sdata);
   // 영화 개봉날짜
-  const sub_Openday = Sdata?.first_air_date.substring(0, 4);
+  const sub_Openday = Sdata?.first_air_date?.substring(0, 4);
   return (
     <>
       <S.Searching_Title>
@@ -88,7 +89,7 @@ function SearchSeries({ tvData, keyword }: ISeriesprops) {
             </M.Poster_Title>
             <M.Search_OriginTitle>{Sdata?.original_title}</M.Search_OriginTitle>
             <M.Poster_infomation_top>
-              <span>{sub_Openday}</span>
+              <span>{sub_Openday ? sub_Openday : "No Data"}</span>
               <span>
                 ⭐
                 {Sdata?.vote_average

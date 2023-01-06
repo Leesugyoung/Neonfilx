@@ -28,7 +28,7 @@ function SearchMovie({ keyword, movieData }: Iprops) {
   const Mdata = movieData?.results.find(item => item.id === m_Id);
 
   // 영화 개봉날짜
-  const sub_Openday = Mdata?.release_date.substring(0, 4);
+  const sub_Openday = Mdata?.release_date?.substring(0, 4);
   return (
     <>
       <S.Searching_Title>

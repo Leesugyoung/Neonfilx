@@ -10,8 +10,8 @@ export interface ISearchResult {
   vote_average: number;
   overview: string;
   original_title: string;
-  release_date: string; // 영화
-  first_air_date: string; // 시리즈
+  release_date?: string; // 영화
+  first_air_date?: string; // 시리즈
 }
 
 export interface IGetSearch {

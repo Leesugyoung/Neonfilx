@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { IGetCredit, IGetDetail } from "../apis/Movi_Ser_Api";
+import { IGetCredit, IGetDetail } from "../../apis/Movi_Ser_Api";
 import * as H from "../../styled-components/StyledHome";
 import * as M from "../../styled-components/StyledModal";
 import { makeImagePath } from "../../utils/utils";
-import { getMovieCredit, getMovieDetail } from "../apis/Movi_Ser_Api";
+import { getMovieCredit, getMovieDetail } from "../../apis/Movi_Ser_Api";
 
 interface IDetailProps {
   category?: string;
@@ -71,12 +70,12 @@ function MovieDetail({ category, id }: IDetailProps) {
               "Neonfilx"
             )}
             <M.Modal_Poster
-              style={{
-                backgroundImage: ` linear-gradient(to top, #181818, transparent), url(${makeImagePath(
-                  detailData!.backdrop_path,
-                  "w500"
-                )})`,
-              }}
+              bgphoto={makeImagePath(
+                detailData?.backdrop_path
+                  ? detailData!.backdrop_path
+                  : detailData!.poster_path,
+                "w500"
+              )}
             />
             <M.Poster_prevBtn onClick={() => navigate(-1)}>✕</M.Poster_prevBtn>
             <M.Poster_Title>{detailData?.title}</M.Poster_Title>

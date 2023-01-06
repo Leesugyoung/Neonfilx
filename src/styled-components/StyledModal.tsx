@@ -39,11 +39,17 @@ export const Modal = styled(motion.div)`
   z-index: 999 !important; // 최상위, z-index : 998 - header 영역
 `;
 
-export const Modal_Poster = styled.div`
+export const Modal_Poster = styled.div<{ bgphoto: string }>`
   width: 100%;
   height: 400px;
-  background-position: center center;
+  background-image: linear-gradient(
+      to top,
+      rgba(24, 24, 24, 1) 2%,
+      rgba(0, 0, 0, 0) 60%
+    ),
+    url(${props => props.bgphoto});
   background-size: cover;
+  background-position: center center;
 `;
 
 export const Poster_prevBtn = styled.div`
@@ -159,7 +165,6 @@ export const Poster_director = styled.div`
   }
 `;
 
-// 검색페이지 전용
 export const Search_overview = styled.div`
   width: 100%;
   font-size: 16px;

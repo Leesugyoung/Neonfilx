@@ -4,6 +4,13 @@ import { makeImagePath } from "../../utils/utils";
 import { IGetSearch } from "../../apis/SearchApi";
 import * as S from "../../styled-components/StyledSearch";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import {
+  getSeriesCredit,
+  getSeriesDetail,
+  IGetCredit,
+  IGetDetail,
+} from "../../apis/Movi_Ser_Api";
 
 interface ISeriesprops {
   keyword: string;
@@ -20,16 +27,18 @@ function SearchSeries({ tvData, keyword }: ISeriesprops) {
     "/search/tv/:tv_id:keyword"
   );
 
-  console.log("seiresMatch", seiresMatch);
-
   const onIdtarget = (id: number) => {
     sets_Id(id);
   };
   const Sdata = tvData?.results.find(item => item.id === s_Id);
-
-  console.log(Sdata);
-  // 영화 개봉날짜
   const sub_Openday = Sdata?.first_air_date?.substring(0, 4);
+
+  const SDataDetail = useQuery<IGetDetail>(["Series_detail"], () =>
+    getSeriesDetail(seiresMatch?.params.tv_id!)
+  );
+
+  console.log(SDataDetail.data);
+
   return (
     <>
       <S.Searching_Title>
@@ -87,8 +96,16 @@ function SearchSeries({ tvData, keyword }: ISeriesprops) {
             <M.Poster_Title>
               {Sdata?.name ? Sdata.name : Sdata?.title}
             </M.Poster_Title>
-            <M.Search_OriginTitle>{Sdata?.original_title}</M.Search_OriginTitle>
-            <M.Poster_infomation_top>
+            <S.Search_OriginTitle>
+              {Sdata?.original_title ? Sdata?.original_title : Sdata?.name}
+            </S.Search_OriginTitle>
+            <S.Search_MiniPoster
+              bgphoto={makeImagePath(
+                Sdata?.poster_path || Sdata!.backdrop_path,
+                "w500"
+              )}
+            />
+            <S.Search_infomation>
               <span>{sub_Openday ? sub_Openday : "No Data"}</span>
               <span>
                 ⭐
@@ -96,14 +113,12 @@ function SearchSeries({ tvData, keyword }: ISeriesprops) {
                   ? (Sdata?.vote_average).toFixed(1)
                   : "not vote"}
               </span>
-            </M.Poster_infomation_top>
-            <M.Poster_infomation_bottom>
-              <M.Search_overview>
+              <S.Search_overview>
                 {Sdata?.overview === ""
                   ? "There is no overview."
                   : Sdata?.overview}
-              </M.Search_overview>
-            </M.Poster_infomation_bottom>
+              </S.Search_overview>
+            </S.Search_infomation>
           </M.Modal>
         </>
       ) : null}

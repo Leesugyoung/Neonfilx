@@ -20,8 +20,6 @@ function SearchMovie({ keyword, movieData }: Iprops) {
     "/search/movie/:movieId:keyword"
   );
 
-  console.log("MovieMatch", MovieMatch);
-
   const onIdtarget = (id: number) => {
     setm_Id(id);
   };
@@ -29,6 +27,7 @@ function SearchMovie({ keyword, movieData }: Iprops) {
 
   // 영화 개봉날짜
   const sub_Openday = Mdata?.release_date?.substring(0, 4);
+
   return (
     <>
       <S.Searching_Title>
@@ -86,23 +85,29 @@ function SearchMovie({ keyword, movieData }: Iprops) {
             <M.Poster_Title>
               {Mdata?.name ? Mdata.name : Mdata?.title}
             </M.Poster_Title>
-            <M.Search_OriginTitle>{Mdata?.original_title}</M.Search_OriginTitle>
-            <M.Poster_infomation_top>
-              <span>{sub_Openday}</span>
+            <S.Search_OriginTitle>
+              {Mdata?.original_title ? Mdata?.original_title : Mdata?.name}
+            </S.Search_OriginTitle>
+            <S.Search_MiniPoster
+              bgphoto={makeImagePath(
+                Mdata?.poster_path || Mdata!.backdrop_path,
+                "w500"
+              )}
+            />
+            <S.Search_infomation>
+              <span>{sub_Openday ? sub_Openday : "No Data"}</span>
               <span>
                 ⭐
                 {Mdata?.vote_average
                   ? (Mdata?.vote_average).toFixed(1)
                   : "not vote"}
               </span>
-            </M.Poster_infomation_top>
-            <M.Poster_infomation_bottom>
-              <M.Search_overview>
+              <S.Search_overview>
                 {Mdata?.overview === ""
                   ? "There is no overview."
                   : Mdata?.overview}
-              </M.Search_overview>
-            </M.Poster_infomation_bottom>
+              </S.Search_overview>
+            </S.Search_infomation>
           </M.Modal>
         </>
       ) : null}

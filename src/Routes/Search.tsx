@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 import { getSearchMovie, getSearchTv, IGetSearch } from "../apis/SearchApi";
-
 import SearchMovie from "../Components/Searchs/SearchMovie";
 import SearchSeries from "../Components/Searchs/SearchSeries";
 import * as S from "../styled-components/StyledSearch";
@@ -21,7 +20,9 @@ function Search() {
   const { data: tv_Data, refetch: tv_refetch } = useQuery<IGetSearch>(
     ["search", "tv"],
     () => getSearchTv(keyword!),
-    { enabled: !!keyword }
+    {
+      enabled: !!keyword,
+    }
   );
 
   // keyword가 변경될 때만 movie_refetch()와 tv_refetch()가 실행될 수 있도록

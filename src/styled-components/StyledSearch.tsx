@@ -115,7 +115,7 @@ export const Modal_Poster = styled.div`
   background-color: ${props =>
     props.theme.black.lighter}; // bgphoto 가 없을 경우 띄워지는
   background-size: cover;
-  background-position: center center;
+  background-position: top center;
   background-repeat: no-repeat;
 `;
 

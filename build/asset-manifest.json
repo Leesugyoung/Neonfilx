@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/neonfilx/static/js/main.523731a8.js",
+    "main.js": "/neonfilx/static/js/main.95b7e05d.js",
     "index.html": "/neonfilx/index.html",
-    "main.523731a8.js.map": "/neonfilx/static/js/main.523731a8.js.map"
+    "main.95b7e05d.js.map": "/neonfilx/static/js/main.95b7e05d.js.map"
   },
   "entrypoints": [
-    "static/js/main.523731a8.js"
+    "static/js/main.95b7e05d.js"
   ]
 }

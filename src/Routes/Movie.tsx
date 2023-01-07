@@ -31,7 +31,7 @@ function Home() {
     () => getMovies("upcoming")
   );
 
-  // 배너 영역 > 모달 띄우는 버튼
+  // 배너 info > 모달 띄우는 버튼
   const navigate = useNavigate();
   const nowId = now_data?.results[0].id;
 
@@ -42,7 +42,7 @@ function Home() {
       ) : (
         <>
           <Helmet>
-            <title> Neonfilx </title>
+            <title>Neonfilx - Movie</title>
           </Helmet>
           {/* -- 배너 영역 --  */}
           <H.Banner

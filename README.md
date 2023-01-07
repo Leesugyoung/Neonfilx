@@ -10,6 +10,8 @@ React, TypeScript, framer motion 를 이용한 넷플릭스 클론 사이트 입
 
 ---
 
+### 🚀 개발환경
+
 - 언어 : JavaScript(ES6), TypeScript
 - 프론트 : React
 - 배포 : Github Pages

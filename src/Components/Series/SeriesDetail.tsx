@@ -32,29 +32,26 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
 
   // Detail API
   const { data: detailData, isLoading: detailLoading } = useQuery<IGetDetail>(
-    ["Series", `${category}_detail`],
+    ["Series_detail", `${category}_detail`],
     () => getSeriesDetail(tv_id)
   );
 
   // Credit API
   const { data: creditData, isLoading: creditLoading } = useQuery<IGetCredit>(
-    ["Series", `${category}_credit`],
+    ["Series_credit", `${category}_credit`],
     () => getSeriesCredit(tv_id)
   );
 
   // 출연진 5명 불러오기
   const actor = creditData?.cast.slice(0, 5);
-
   // 감독 정보
   const production = creditData?.crew.find(
     people =>
       people.known_for_department === "Production" ||
       people.known_for_department === "Directing"
   );
-
-  // 시리즈 개봉 날짜
-  const openday_data = detailData?.first_air_date;
-  const sub_Openday = openday_data?.substring(0, 4);
+  // 개봉 날짜
+  const sub_Openday = detailData?.first_air_date.substring(0, 4);
 
   return (
     <>
@@ -87,13 +84,14 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
             <M.Modal_Poster
               bgphoto={makeImagePath(
                 detailData?.backdrop_path
-                  ? detailData!.backdrop_path + ""
-                  : detailData!.poster_path + "",
+                  ? detailData!.backdrop_path
+                  : detailData!.poster_path,
                 "w500"
               )}
             />
             <M.Poster_prevBtn onClick={() => navigate(-1)}>✕</M.Poster_prevBtn>
             <M.Poster_Title>{detailData?.name}</M.Poster_Title>
+            <M.Poster_MiniTitle>{detailData?.name}</M.Poster_MiniTitle>
             <M.Poster_infomation_top>
               <span>{sub_Openday}</span>
               {detailData?.genres.slice(0, 3).map((genre, index) => (
@@ -148,4 +146,4 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
   );
 }
 
-export default SeriesDetail;
+export default React.memo(SeriesDetail);

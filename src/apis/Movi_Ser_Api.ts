@@ -42,10 +42,10 @@ export interface IGetDetail {
   ];
   // ------ movies 정보
   title: string;
-  original_title: string;
+  original_title?: string;
   // ------ seires 정보
   name: string;
-  original_name: string;
+  original_name?: string;
   first_air_date: string;
   release_date: string;
 }
@@ -73,36 +73,48 @@ export interface IGetCredit {
 export function getMovies(category: string) {
   return fetch(
     `${BASE_PATH}/movie/${category}?api_key=${API_KEY}&language=en-US&page=1`
-  ).then(response => response.json());
+  ).then(response => {
+    return response.json();
+  });
 }
 
 export function getMovieDetail(id: string) {
   return fetch(
     `${BASE_PATH}/movie/${id}?api_key=${API_KEY}&language=en-US`
-  ).then(response => response.json());
+  ).then(response => {
+    return response.json();
+  });
 }
 
 export function getMovieCredit(id: string) {
   return fetch(
     `${BASE_PATH}/movie/${id}/credits?api_key=${API_KEY}&language=en-US`
-  ).then(response => response.json());
+  ).then(response => {
+    return response.json();
+  });
 }
 
 // -------- Series(tv)
 export function getSeries(tvCategory: string) {
   return fetch(
     `${BASE_PATH}/tv/${tvCategory}?api_key=${API_KEY}&language=en-US&page=1`
-  ).then(response => response.json());
+  ).then(response => {
+    return response.json();
+  });
 }
 
 export function getSeriesDetail(tv_id: string) {
   return fetch(
     `${BASE_PATH}/tv/${tv_id}?api_key=${API_KEY}&language=en-US`
-  ).then(response => response.json());
+  ).then(response => {
+    return response.json();
+  });
 }
 
 export function getSeriesCredit(tv_id: string) {
   return fetch(
     `${BASE_PATH}/tv/${tv_id}/credits?api_key=${API_KEY}&language=en-US`
-  ).then(response => response.json());
+  ).then(response => {
+    return response.json();
+  });
 }

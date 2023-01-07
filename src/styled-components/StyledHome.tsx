@@ -1,36 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-// ----------Variants----
-export const RowVariants = {
-  hidden: (isNext: boolean) => {
-    return {
-      x: isNext ? window.innerWidth : -window.innerWidth,
-    };
-  },
-  visible: {
-    x: 0,
-  },
-  exit: (isNext: boolean) => {
-    return {
-      x: isNext ? -window.innerWidth : window.innerWidth,
-    };
-  },
-};
-
-export const BoxHoverVariants = {
-  initial: { scale: 1 },
-  hover: {
-    scale: 1.3,
-    y: -30,
-    transition: {
-      delay: 0.3,
-      duration: 0.3,
-      type: "tween",
-    },
-  },
-};
-
 export const infoVariants = {
   hover: {
     opacity: 1,

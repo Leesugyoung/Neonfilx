@@ -37,8 +37,6 @@ function SearchSeries({ tvData, keyword }: ISeriesprops) {
     getSeriesDetail(seiresMatch?.params.tv_id!)
   );
 
-  console.log(SDataDetail.data);
-
   return (
     <>
       <S.Searching_Title>

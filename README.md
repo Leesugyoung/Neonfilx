@@ -33,12 +33,12 @@ React, TypeScript, framer motion 를 이용한 넷플릭스 클론 사이트 입
 ### 📝 프로젝트 구조
 
 -📂[src]
-└── [apis]/_ ― 영화/드라마/검색 API 폴더  
+└── [apis]/_ ― 영화/시리즈/검색 API 폴더  
 └── [assets] ➡️ [images]/_ ― image 폴더  
 └── [Components] ― 리액트 컴포넌트 폴더  
 └── [movies]_ ― 영화 슬라이더, 디테일 컴포넌트 폴더  
-└── [Series]/_ ― 드라마(시리즈) 슬라이더, 디테일 컴포넌트 폴더  
-└── [Searhs]/_ ― 영화, 드라마 검색 컴포넌트 폴더  
+└── [Series]/_ ― 시리즈 슬라이더, 디테일 컴포넌트 폴더  
+└── [Searhs]/_ ― 영화, 시리즈 검색 컴포넌트 폴더  
 └── Header.tsx ― Header 컴포넌트.tsx  
 └── Banner.tsx ― Banner 컴포넌트.tsx  
 ├── [Routes]/_ ― 리액트 라우터 폴더  

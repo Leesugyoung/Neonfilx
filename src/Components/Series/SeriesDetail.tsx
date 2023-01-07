@@ -83,9 +83,7 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
             )}
             <M.Modal_Poster
               bgphoto={makeImagePath(
-                detailData?.backdrop_path
-                  ? detailData!.backdrop_path
-                  : detailData!.poster_path,
+                detailData?.backdrop_path || detailData!.backdrop_path,
                 "w500"
               )}
             />

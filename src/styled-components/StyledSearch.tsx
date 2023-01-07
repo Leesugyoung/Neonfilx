@@ -118,3 +118,54 @@ export const Modal_Poster = styled.div`
   background-position: center center;
   background-repeat: no-repeat;
 `;
+
+export const Search_infomation = styled.div`
+  // 1. 개봉년일 2.평점
+  padding-left: 250px;
+  position: relative;
+  top: -60px;
+  font-weight: 500;
+  font-size: 18px;
+  span:first-child {
+    color: #46d369;
+    border: 1px solid ${props => props.theme.white.darker};
+    padding: 0.5px 4px;
+    border-radius: 3px;
+    margin-right: 10px;
+  }
+`;
+
+export const Search_overview = styled.div`
+  width: 90%;
+  font-size: 16px;
+  margin-top: 20px;
+  color: ${props => props.theme.white.lighter};
+  background-color: ${props => props.theme.black.darker};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 8; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+`;
+
+export const Search_MiniPoster = styled.div<{ bgphoto: string }>`
+  width: 150px;
+  height: 210px;
+  background-image: url(${props => props.bgphoto});
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 420px;
+  left: 50px;
+`;
+
+export const Search_OriginTitle = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 55px;
+  position: relative;
+  top: -90px;
+  letter-spacing: 0.8px;
+  color: #bababa;
+`;

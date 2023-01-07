@@ -26,7 +26,7 @@ function TvSeries() {
     () => getSeries("on_the_air")
   );
 
-  // 배너 이미지, results[0]의 경우 backdrop_path
+  // backdrop_path 또는 poster_path 없는 경우를 위함
   const imagePath = pop_data?.results[0].backdrop_path
     ? pop_data?.results[0].backdrop_path
     : pop_data?.results[0].poster_path;

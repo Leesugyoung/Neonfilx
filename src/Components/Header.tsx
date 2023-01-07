@@ -102,7 +102,7 @@ const navVariants = {
   },
 };
 
-export const logoVariants = {
+const logoVariants = {
   normal: {
     fillOpacity: 1,
   },

@@ -6,16 +6,16 @@ import TvSeries from "./Routes/Series";
 
 function App() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Movie />}>
+        <Route path={process.env.PUBLIC_URL + "/"} element={<Movie />}>
           <Route path="movies/:movieId" element={<Movie />} />
         </Route>
-        <Route path="/tv" element={<TvSeries />}>
+        <Route path={process.env.PUBLIC_URL + "/tv"} element={<TvSeries />}>
           <Route path=":tv_id" element={<TvSeries />} />
         </Route>
-        <Route path="/search" element={<Search />}>
+        <Route path={process.env.PUBLIC_URL + "/search"} element={<Search />}>
           <Route path="movie/:movieId" element={<Search />} />
           <Route path="tv/:tv_id" element={<Search />} />
         </Route>

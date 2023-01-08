@@ -6,7 +6,6 @@ import * as H from "../../styled-components/StyledHome";
 import * as M from "../../styled-components/StyledModal";
 import { makeImagePath } from "../../utils/utils";
 import { getMovieCredit, getMovieDetail } from "../../apis/Movi_Ser_Api";
-import React, { useEffect } from "react";
 
 interface IDetailProps {
   category?: string;
@@ -120,4 +119,4 @@ function MovieDetail({ category, id }: IDetailProps) {
   );
 }
 
-export default React.memo(MovieDetail);
+export default MovieDetail;

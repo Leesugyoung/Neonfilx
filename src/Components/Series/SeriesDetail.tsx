@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { IGetCredit, IGetDetail } from "../../apis/Movi_Ser_Api";
@@ -83,7 +82,9 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
             )}
             <M.Modal_Poster
               bgphoto={makeImagePath(
-                detailData?.backdrop_path || detailData!.backdrop_path,
+                detailData?.backdrop_path
+                  ? detailData?.backdrop_path
+                  : detailData!.backdrop_path,
                 "w500"
               )}
             />
@@ -144,4 +145,4 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
   );
 }
 
-export default React.memo(SeriesDetail);
+export default SeriesDetail;

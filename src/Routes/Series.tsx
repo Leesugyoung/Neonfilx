@@ -40,7 +40,7 @@ function TvSeries() {
       ) : (
         <>
           <Helmet>
-            <title>Neonfilx - Series</title>
+            <title>Neonflix - Series</title>
           </Helmet>
           {/* -- 배너 영역 --  */}
           <H.Banner bgphoto={makeImagePath(imagePath || "")}>
@@ -86,7 +86,7 @@ function TvSeries() {
           />
         </>
       )}
-      <H.Footer>© Copyright 2022. Leesu All rights reserved.</H.Footer>
+      <H.Footer>© Copyright 2023. Leesu All rights reserved.</H.Footer>
     </H.Wrapper>
   );
 }

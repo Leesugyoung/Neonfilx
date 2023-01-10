@@ -35,7 +35,7 @@ function Search() {
     <>
       <S.Wrapper>
         <Helmet>
-          <title>Neonfilx - Search</title>
+          <title>Neonflix - Search</title>
         </Helmet>
         {keyword === null ? (
           <S.Notingdiv>

@@ -1,4 +1,4 @@
-# Neonfilx
+# Neonflix
 
 React, TypeScript, framer motion 를 이용한 넷플릭스 클론 사이트 입니다 :)
 
@@ -6,7 +6,7 @@ React, TypeScript, framer motion 를 이용한 넷플릭스 클론 사이트 입
 
 ### 🌐 프로젝트 링크
 
-[Neonfilx 바로가기](https://leesugyoung.github.io/neonfilx/)
+[Neonflix 바로가기](https://leesugyoung.github.io/neonflix/)
 
 ---
 

@@ -42,7 +42,7 @@ function Home() {
       ) : (
         <>
           <Helmet>
-            <title>Neonfilx - Movie</title>
+            <title>Neonflix - Movie</title>
           </Helmet>
           {/* -- 배너 영역 --  */}
           <H.Banner
@@ -92,7 +92,7 @@ function Home() {
           <MovieSlider category="upcoming" title="Coming soon" data={up_data} />
         </>
       )}
-      <H.Footer>© Copyright 2022. Leesu All rights reserved.</H.Footer>
+      <H.Footer>© Copyright 2023. Leesu All rights reserved.</H.Footer>
     </H.Wrapper>
   );
 }

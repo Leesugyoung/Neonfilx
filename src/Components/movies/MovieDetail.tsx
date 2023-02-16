@@ -21,7 +21,7 @@ function MovieDetail({ category, id }: IDetailProps) {
     () => getMovieDetail(id)
   );
 
-  // movie  API
+  // movie credit API
   const { data: creditData, isLoading: creditLoading } = useQuery<IGetCredit>(
     ["movie", `${category}_credit`],
     () => getMovieCredit(id)
@@ -71,9 +71,7 @@ function MovieDetail({ category, id }: IDetailProps) {
             )}
             <M.Modal_Poster
               bgphoto={makeImagePath(
-                detailData?.backdrop_path
-                  ? detailData!.backdrop_path
-                  : detailData!.poster_path,
+                detailData?.backdrop_path || detailData!.poster_path,
                 "w500"
               )}
             />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as H from "../../styled-components/StyledHome";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";

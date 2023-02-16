@@ -16,6 +16,7 @@ function SearchMovie({ keyword, movieData }: Iprops) {
 
   const MovieClick = (movieId: number) =>
     navigate(`/search/movie/${movieId}?keyword=${keyword}`);
+
   const MovieMatch: PathMatch<string> | null = useMatch(
     "/search/movie/:movieId:keyword"
   );

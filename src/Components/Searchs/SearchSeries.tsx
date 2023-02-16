@@ -4,13 +4,6 @@ import { makeImagePath } from "../../utils/utils";
 import { IGetSearch } from "../../apis/SearchApi";
 import * as S from "../../styled-components/StyledSearch";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import {
-  getSeriesCredit,
-  getSeriesDetail,
-  IGetCredit,
-  IGetDetail,
-} from "../../apis/Movi_Ser_Api";
 
 interface ISeriesprops {
   keyword: string;
@@ -32,10 +25,6 @@ function SearchSeries({ tvData, keyword }: ISeriesprops) {
   };
   const Sdata = tvData?.results.find(item => item.id === s_Id);
   const sub_Openday = Sdata?.first_air_date?.substring(0, 4);
-
-  const SDataDetail = useQuery<IGetDetail>(["Series_detail"], () =>
-    getSeriesDetail(seiresMatch?.params.tv_id!)
-  );
 
   return (
     <>

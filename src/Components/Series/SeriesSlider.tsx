@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as H from "../../styled-components/StyledHome";
 import { useNavigate } from "react-router-dom";
-import { AnimatePresence, Variants } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { makeImagePath } from "../../utils/utils";
 import { PathMatch, useMatch } from "react-router-dom";
 import { IGetResult } from "../../apis/Movi_Ser_Api";

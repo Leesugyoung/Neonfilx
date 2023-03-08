@@ -34,6 +34,7 @@ function MovieDetail({ category, id }: IDetailProps) {
     getMovieCredit(id)
   );
 
+  // 이전 데이터 띄워지지 않게 refetch 처리
   useEffect(() => {
     refetchDetail();
     refetchCredit();

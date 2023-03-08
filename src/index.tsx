@@ -63,7 +63,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${props => props.theme.black.veryDark};
     line-height: 1.2;
     overflow-x: hidden;
-    font-size: 10px;
+    font-size: 15px;
   }
   a {
     text-decoration: none;

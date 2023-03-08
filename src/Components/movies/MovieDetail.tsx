@@ -6,6 +6,7 @@ import * as H from "../../styled-components/StyledHome";
 import * as M from "../../styled-components/StyledModal";
 import { makeImagePath } from "../../utils/utils";
 import { getMovieCredit, getMovieDetail } from "../../apis/Movi_Ser_Api";
+import { useEffect } from "react";
 
 interface IDetailProps {
   category?: string;
@@ -16,16 +17,27 @@ function MovieDetail({ category, id }: IDetailProps) {
   const navigate = useNavigate();
 
   // movie detail API
-  const { data: detailData, isLoading: detailLoading } = useQuery<IGetDetail>(
-    ["movie", `${category}_detail`],
-    () => getMovieDetail(id)
+  const {
+    data: detailData,
+    isLoading: detailLoading,
+    refetch: refetchDetail,
+  } = useQuery<IGetDetail>(["movie", `${category}_detail`, id], () =>
+    getMovieDetail(id)
   );
 
   // movie credit API
-  const { data: creditData, isLoading: creditLoading } = useQuery<IGetCredit>(
-    ["movie", `${category}_credit`],
-    () => getMovieCredit(id)
+  const {
+    data: creditData,
+    isLoading: creditLoading,
+    refetch: refetchCredit,
+  } = useQuery<IGetCredit>(["movie", `${category}_credit`, id], () =>
+    getMovieCredit(id)
   );
+
+  useEffect(() => {
+    refetchDetail();
+    refetchCredit();
+  }, [id, refetchDetail, refetchCredit]); // id가 변경될 때마다 데이터 업데이트
 
   // 출연진 5명 불러오기
   const actor = creditData?.cast.slice(0, 5);
@@ -36,9 +48,6 @@ function MovieDetail({ category, id }: IDetailProps) {
   // 영화 개봉 날짜
   const sub_Openday = detailData?.release_date.substring(0, 4);
 
-  /*  useEffect(() => {
-    console.log("렌더링 중");
-  }, []); */
   return (
     <>
       {detailLoading && creditLoading ? (

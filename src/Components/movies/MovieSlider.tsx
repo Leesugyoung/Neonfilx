@@ -133,11 +133,8 @@ const MovieSlider: React.FC<IBannerProps> = React.memo(
                     whileHover="hover"
                     transition={{ type: "tween" }}
                     bgphoto={makeImagePath(
-                      movie.backdrop_path
-                        ? movie.backdrop_path
-                        : movie.poster_path
-                        ? movie.poster_path
-                        : "no image."
+                      movie?.backdrop_path || movie?.poster_path,
+                      "w500"
                     )}
                   >
                     <H.RowBox_Info variants={H.infoVariants}>

@@ -47,25 +47,33 @@ export const Banner = styled.div<{ bgphoto: string }>`
 
 export const Title_and_Overview = styled.div`
   // 타이틀, 설명 container
-  width: 50vw;
+  width: 55vw;
   height: 50vh;
   margin-top: 20vh;
   margin-left: 60px;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    height: 60vh;
+  }
 `;
 
 export const Title = styled.h2`
   // 영화제목
-  font-size: 4vw;
+  font-size: 80px;
   font-weight: 700;
   margin-bottom: 20px;
   text-shadow: 1px 2px 3px rgb(0, 0, 0, 0.6);
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    font-size: 75px;
+  }
 `;
 
 export const Overview = styled.p`
   // 영화 설명
-  font-size: 1.3vw;
+  font-size: 25px;
   font-weight: 400;
-  width: 60%;
+  width: 70%;
   text-shadow: 1px 2px 4px rgb(0, 0, 0, 0.7);
   margin-bottom: 20px;
 
@@ -75,22 +83,27 @@ export const Overview = styled.p`
   -webkit-line-clamp: 4; /* 라인수 */
   -webkit-box-orient: vertical;
   word-wrap: break-word;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    font-size: 20px;
+  }
 `;
 
 export const Btn_Container = styled.div`
   display: flex;
   flex-direction: row;
-  width: 50%;
+  width: 60%;
+  min-width: 40%;
 `;
 
 export const PlayBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 8vw;
-  height: 45px;
+  width: 150px;
+  height: 50px;
   background-color: ${props => props.theme.white.lighter};
-  font-size: 1.3vw;
+  font-size: 25px;
   color: ${props => props.theme.black.darker};
   border-radius: 5px;
   text-align: center;
@@ -102,28 +115,41 @@ export const PlayBtn = styled.div`
   :hover {
     background-color: rgba(238, 238, 238, 0.6);
   }
+
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+  }
 `;
 
 export const InfoBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 11vw;
-  height: 45px;
+  width: 210px;
+  height: 50px;
   background-color: rgba(75, 75, 75, 0.8);
-  font-size: 1.3vw;
+  font-size: 25px;
   color: ${props => props.theme.white.lighter};
   border-radius: 5px;
   cursor: pointer;
   :hover {
     background-color: rgba(75, 75, 75, 0.5);
   }
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    width: 180px;
+    height: 40px;
+    font-size: 20px;
+  }
 `;
 
 // ---------- 슬라이드 영역
 export const Slider = styled.div`
   padding: 0 60px;
-  height: 200px;
+  height: 220px;
   position: relative;
   top: -100px;
   margin-bottom: 30px;
@@ -139,14 +165,13 @@ export const Slider_Title = styled.h2`
 export const Row = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 3px;
+  gap: 5px;
   width: 97%;
   position: absolute;
-  height: 130px;
 `;
 
 export const RowBox = styled(motion.div)<{ bgphoto: string }>`
-  height: 135px;
+  height: 170px;
   margin-right: 5px;
   border-radius: 3px;
   background-image: url(${props => props.bgphoto});
@@ -161,6 +186,10 @@ export const RowBox = styled(motion.div)<{ bgphoto: string }>`
   }
   &:last-child {
     transform-origin: center right !important;
+  }
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    height: 135px;
   }
 `;
 
@@ -179,9 +208,9 @@ export const RowBox_Info = styled(motion.div)`
 
 // ---------- 슬라이드 영역 : next,prev 버튼
 export const prevBtn = styled.div`
-  width: 3.5vh;
-  height: 3.5vh;
-  top: 13vh;
+  width: 30px;
+  height: 30px;
+  top: 100px;
   position: absolute;
   svg {
     fill: rgb(238, 238, 238);
@@ -191,13 +220,17 @@ export const prevBtn = styled.div`
   }
   z-index: 1;
   cursor: pointer;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    top: 90px;
+  }
 `;
 
 export const nextBtn = styled.div`
-  width: 3.5vh;
-  height: 3.5vh;
-  top: 13vh;
-  right: 5px;
+  width: 30px;
+  height: 30px;
+  top: 100px;
+  right: 10px;
   position: absolute;
   svg {
     fill: rgb(238, 238, 238);
@@ -207,6 +240,10 @@ export const nextBtn = styled.div`
   }
   z-index: 1;
   cursor: pointer;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    top: 90px;
+  }
 `;
 
 // ---------- 푸터 영역

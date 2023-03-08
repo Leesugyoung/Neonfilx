@@ -10,7 +10,7 @@ export const overlayVariants = {
 
 export const modalVariants = {
   initial: { opacity: 0 },
-  click: { opacity: 1, transition: { duration: 0.5 } },
+  click: { opacity: 1, transition: { duration: 0.3 } },
   exit: { opacity: 0 },
 };
 // -----------------------
@@ -41,7 +41,7 @@ export const Modal = styled(motion.div)`
 
 export const Modal_Poster = styled.div<{ bgphoto: string }>`
   width: 100%;
-  height: 400px;
+  height: 500px;
   background-image: linear-gradient(
       to top,
       rgba(24, 24, 24, 1) 2%,
@@ -50,6 +50,10 @@ export const Modal_Poster = styled.div<{ bgphoto: string }>`
     url(${props => props.bgphoto});
   background-size: cover;
   background-position: center center;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    height: 350px;
+  }
 `;
 
 export const Poster_prevBtn = styled.div`
@@ -73,7 +77,7 @@ export const Poster_Title = styled.div`
   height: 70px;
   color: ${props => props.theme.white.lighter};
   padding: 0 50px;
-  font-size: 50px;
+  font-size: 45px;
   font-weight: 700;
   position: relative;
   top: -90px;
@@ -84,22 +88,34 @@ export const Poster_Title = styled.div`
   -webkit-line-clamp: 1; /* 라인수 */
   -webkit-box-orient: vertical;
   word-wrap: break-word;
+
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    font-size: 32px;
+    top: -75px;
+    height: 40px;
+    margin-bottom: 25px;
+  }
 `;
 
 export const Poster_MiniTitle = styled.div`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   padding-left: 55px;
   position: relative;
   top: -90px;
   letter-spacing: 0.8px;
   color: #bababa;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    font-size: 14px;
+  }
 `;
 
 export const Poster_infomation_top = styled.div`
   // 1.개봉년도  2.장르  3.평균 평점 리스트
   top: -55px;
-  font-size: 18px;
+  font-size: 22px;
   padding-left: 50px;
   position: relative;
   font-weight: 500;
@@ -116,6 +132,10 @@ export const Poster_infomation_top = styled.div`
   span:last-child {
     margin-left: 10px;
   }
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    font-size: 18px;
+  }
 `;
 
 export const Poster_infomation_bottom = styled.div`
@@ -130,39 +150,55 @@ export const Poster_infomation_bottom = styled.div`
 
 export const Poster_overview = styled.div`
   width: 60%;
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 1.45;
   color: ${props => props.theme.white.lighter};
   background-color: ${props => props.theme.black.darker};
   padding-right: 50px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 7; /* 라인수 */
+  -webkit-line-clamp: 12; /* 라인수 */
   -webkit-box-orient: vertical;
   word-wrap: break-word;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    -webkit-line-clamp: 1; /* 라인수 */
+    font-size: 15px;
+    line-height: 1.2;
+  }
 `;
 
 export const Poster_acter_and_director = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
-  font-size: 16px;
+  font-size: 18px;
   color: ${props => props.theme.white.lighter};
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    font-size: 16px;
+  }
 `;
 
 export const Poster_actor = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   div {
     display: inline;
   }
   span {
     color: #777777;
-    margin-right: 5px;
+    margin-right: 6px;
+  }
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    margin-bottom: 10px;
   }
 `;
+
 export const Poster_director = styled.div`
   span {
     color: #777777;
-    margin-right: 5px;
+    margin-right: 6px;
   }
 `;

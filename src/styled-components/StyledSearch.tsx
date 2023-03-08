@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 export const BoxHoverVariants = {
   initial: { scale: 1 },
   hover: {
-    scale: 1.3,
-    y: -20,
+    scale: 1.2,
+    y: -22,
     transition: {
       delay: 0.3,
       duration: 0.3,
@@ -67,7 +67,7 @@ export const SearchRow_movie = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 5px;
-  width: 100%;
+  width: 96%;
   margin-bottom: 60px;
 `;
 
@@ -75,12 +75,12 @@ export const SearchRow_series = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 5px;
-  width: 100%;
+  width: 96%;
   margin-bottom: 40px;
 `;
 
 export const RowBox = styled(motion.div)<{ bgphoto: string }>`
-  height: 135px;
+  height: 170px;
   border-radius: 3px;
   background-image: url(${props => props.bgphoto});
   background-color: ${props =>
@@ -94,6 +94,10 @@ export const RowBox = styled(motion.div)<{ bgphoto: string }>`
   font-size: 10px;
   text-align: center;
   color: white;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    height: 135px;
+  }
 `;
 
 export const RowBox_Info = styled(motion.div)`
@@ -111,7 +115,7 @@ export const RowBox_Info = styled(motion.div)`
 
 export const Modal_Poster = styled.div`
   width: 100%;
-  height: 400px;
+  height: 500px;
   background-color: ${props =>
     props.theme.black.lighter}; // bgphoto 가 없을 경우 띄워지는
   background-size: cover;
@@ -121,11 +125,11 @@ export const Modal_Poster = styled.div`
 
 export const Search_infomation = styled.div`
   // 1. 개봉년일 2.평점
-  padding-left: 250px;
+  padding-left: 320px;
   position: relative;
-  top: -60px;
+  top: -40px;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 20px;
   span:first-child {
     color: #46d369;
     border: 1px solid ${props => props.theme.white.darker};
@@ -133,39 +137,60 @@ export const Search_infomation = styled.div`
     border-radius: 3px;
     margin-right: 10px;
   }
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    padding-left: 250px;
+    top: -60px;
+    font-size: 18px;
+  }
 `;
 
 export const Search_overview = styled.div`
   width: 90%;
-  font-size: 16px;
+  font-size: 20px;
   margin-top: 20px;
+  line-height: 1.4;
   color: ${props => props.theme.white.lighter};
   background-color: ${props => props.theme.black.darker};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 8; /* 라인수 */
-  -webkit-box-orient: vertical;
-  word-wrap: break-word;
+
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    height: 200px;
+    font-size: 15px;
+    line-height: 1.3;
+    font-weight: 400;
+    overflow: auto;
+  }
 `;
 
 export const Search_MiniPoster = styled.div<{ bgphoto: string }>`
-  width: 150px;
-  height: 210px;
+  width: 220px;
+  height: 280px;
   background-image: url(${props => props.bgphoto});
   background-size: cover;
   background-position: center center;
   position: absolute;
-  top: 420px;
+  top: 540px;
   left: 50px;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    width: 160px;
+    height: 220px;
+    top: 370px;
+    left: 50px;
+  }
 `;
 
 export const Search_OriginTitle = styled.div`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   padding-left: 55px;
   position: relative;
   top: -90px;
   letter-spacing: 0.8px;
   color: #bababa;
+  @media screen and (max-width: 1536px) {
+    /* 15.6인치 노트북 기준 */
+    font-size: 14px;
+  }
 `;

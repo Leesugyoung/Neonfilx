@@ -29,7 +29,7 @@ function Search() {
   useEffect(() => {
     movie_refetch();
     tv_refetch();
-  }, [keyword]);
+  }, [keyword, movie_refetch, tv_refetch]);
 
   return (
     <>

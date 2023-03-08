@@ -135,9 +135,8 @@ const SeriesSlider: React.FC<IBannerProps> = ({ category, data, title }) => {
                   whileHover="hover"
                   transition={{ type: "tween" }}
                   bgphoto={makeImagePath(
-                    Series.backdrop_path
-                      ? Series.backdrop_path
-                      : Series.poster_path
+                    Series?.backdrop_path || Series?.poster_path,
+                    "w500"
                   )}
                 >
                   <H.RowBox_Info variants={H.infoVariants}>

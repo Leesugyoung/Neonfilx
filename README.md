@@ -1,6 +1,7 @@
 # Neonflix
 
-React, TypeScript, framer motion 를 이용한 넷플릭스 클론 사이트 입니다 :)
+React, TypeScript, framer motion 를 이용한 넷플릭스 클론 사이트 입니다 :)  
+최대한 비슷하게 구현하기 위해 기초 강의 외에도 추가적인 공부를 통해 제작해보았습니다.
 
 ---
 

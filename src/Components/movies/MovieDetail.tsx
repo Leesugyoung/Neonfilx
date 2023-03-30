@@ -81,7 +81,9 @@ function MovieDetail({ category, id }: IDetailProps) {
             )}
             <M.Modal_Poster
               bgphoto={makeImagePath(
-                detailData?.backdrop_path || detailData!.poster_path,
+                detailData?.backdrop_path
+                  ? detailData!.backdrop_path
+                  : detailData!.poster_path,
                 "w500"
               )}
             />

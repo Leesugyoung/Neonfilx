@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/neonflix/static/js/main.9ca4d8dc.js",
+    "main.js": "/neonflix/static/js/main.bcecae37.js",
     "index.html": "/neonflix/index.html",
-    "main.9ca4d8dc.js.map": "/neonflix/static/js/main.9ca4d8dc.js.map"
+    "main.bcecae37.js.map": "/neonflix/static/js/main.bcecae37.js.map"
   },
   "entrypoints": [
-    "static/js/main.9ca4d8dc.js"
+    "static/js/main.bcecae37.js"
   ]
 }

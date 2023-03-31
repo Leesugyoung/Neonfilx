@@ -80,12 +80,13 @@ function MovieDetail({ category, id }: IDetailProps) {
               "Neonfilx"
             )}
             <M.Modal_Poster
-              bgphoto={makeImagePath(
+              bgphoto={
                 detailData?.backdrop_path
-                  ? detailData!.backdrop_path
-                  : detailData!.poster_path,
-                "w500"
-              )}
+                  ? makeImagePath(detailData.backdrop_path + "", "w500")
+                  : detailData?.backdrop_path
+                  ? makeImagePath(detailData.poster_path + "", "w500")
+                  : null
+              }
             />
             <M.Poster_prevBtn onClick={() => navigate(-1)}>✕</M.Poster_prevBtn>
             <M.Poster_Title>{detailData?.title}</M.Poster_Title>

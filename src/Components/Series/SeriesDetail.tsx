@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { IGetCredit, IGetDetail } from "../../apis/Movi_Ser_Api";
-import * as H from "../../styled-components/StyledHome";
+import { useEffect } from "react";
 import * as M from "../../styled-components/StyledModal";
 import { makeImagePath } from "../../utils/utils";
 import { getSeriesCredit, getSeriesDetail } from "../../apis/Movi_Ser_Api";
@@ -30,9 +30,12 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
   const navigate = useNavigate();
 
   // Detail API
-  const { data: detailData, isLoading: detailLoading } = useQuery<IGetDetail>(
-    ["Series_detail", `${category}_detail`],
-    () => getSeriesDetail(tv_id)
+  const {
+    data: detailData,
+    isLoading: detailLoading,
+    refetch: refetchDetail,
+  } = useQuery<IGetDetail>(["Series_detail", `${category}_detail`], () =>
+    getSeriesDetail(tv_id)
   );
 
   // Credit API
@@ -52,10 +55,15 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
   // 개봉 날짜
   const sub_Openday = detailData?.first_air_date.substring(0, 4);
 
+  // 이전 데이터 띄워지지 않게 refetch 처리
+  useEffect(() => {
+    refetchDetail();
+  }, [tv_id, refetchDetail]); // id가 변경될 때마다 데이터 업데이트
+
   return (
     <>
       {detailLoading && creditLoading ? (
-        <H.Loader>Loading...</H.Loader>
+        ""
       ) : (
         <>
           <M.Overlay

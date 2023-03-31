@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { IGetCredit, IGetDetail } from "../../apis/Movi_Ser_Api";
-import * as H from "../../styled-components/StyledHome";
 import * as M from "../../styled-components/StyledModal";
 import { makeImagePath } from "../../utils/utils";
 import { getMovieCredit, getMovieDetail } from "../../apis/Movi_Ser_Api";
@@ -52,7 +51,7 @@ function MovieDetail({ category, id }: IDetailProps) {
   return (
     <>
       {detailLoading && creditLoading ? (
-        <H.Loader>Loading...</H.Loader>
+        ""
       ) : (
         <>
           <M.Overlay

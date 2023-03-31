@@ -39,9 +39,12 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
   );
 
   // Credit API
-  const { data: creditData, isLoading: creditLoading } = useQuery<IGetCredit>(
-    ["Series_credit", `${category}_credit`],
-    () => getSeriesCredit(tv_id)
+  const {
+    data: creditData,
+    isLoading: creditLoading,
+    refetch: refetchCredit,
+  } = useQuery<IGetCredit>(["Series_credit", `${category}_credit`], () =>
+    getSeriesCredit(tv_id)
   );
 
   // 출연진 5명 불러오기
@@ -58,7 +61,7 @@ function SeriesDetail({ category, tv_id }: IDetailProps) {
   // 이전 데이터 띄워지지 않게 refetch 처리
   useEffect(() => {
     refetchDetail();
-  }, [tv_id, refetchDetail]); // id가 변경될 때마다 데이터 업데이트
+  }, [tv_id, refetchDetail, refetchCredit]); // id가 변경될 때마다 데이터 업데이트
 
   return (
     <>

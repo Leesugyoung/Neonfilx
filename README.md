@@ -1,6 +1,6 @@
 # Neonflix
 
-- React, TypeScript, framer motion 를 이용한 넷플릭스 클론 사이트 입니다 :)  
+- React, TypeScript, framer motion 를 이용한 영화 및 TV Show 스트리밍 서비스 입니다.  
 
 ---
 

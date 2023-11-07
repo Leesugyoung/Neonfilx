@@ -8,6 +8,8 @@
 
 [Neonflix 바로가기](https://leesugyoung.github.io/neonflix/)
 
+[next.js 버전 데모](https://neonflix-nextjs-app.vercel.app/)
+
 서버 실행 코드
 
 ```
